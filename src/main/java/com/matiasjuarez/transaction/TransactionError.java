@@ -1,4 +1,4 @@
-package com.matiasjuarez.model.transaction;
+package com.matiasjuarez.transaction;
 
 import lombok.Data;
 

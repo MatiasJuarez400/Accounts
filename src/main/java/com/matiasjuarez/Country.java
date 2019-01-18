@@ -1,4 +1,4 @@
-package com.matiasjuarez.model;
+package com.matiasjuarez;
 
 import lombok.Data;
 

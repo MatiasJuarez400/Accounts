@@ -1,6 +1,6 @@
-package com.matiasjuarez.model.account;
+package com.matiasjuarez.account;
 
-import com.matiasjuarez.model.transaction.Transaction;
+import com.matiasjuarez.transaction.Transaction;
 import lombok.Data;
 
 import java.util.List;
