@@ -7,4 +7,5 @@ import java.util.List;
 public interface CurrencyDAO {
     List<Currency> getCurrencies();
     Currency getCurrency(String ticker);
+    double getToDollarExchangeRate(String ticker);
 }

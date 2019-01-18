@@ -10,38 +10,45 @@ import java.util.Map;
 public class CurrenciesInMemoryDB extends InMemoryDB {
     public static final String ID = "CURRENCIES_DB";
 
-    private Map<String, Currency> currencyExchangeRatesMap;
+    private Map<String, Currency> currenciesMap;
+    private Map<String, Double> currencyToDollarExchangeRatesMap;
 
     public CurrenciesInMemoryDB() {
         super(ID);
-        this.currencyExchangeRatesMap = new HashMap<>();
+        this.currenciesMap = new HashMap<>();
+        this.currencyToDollarExchangeRatesMap = new HashMap<>();
     }
 
     @Override
     public void loadData() {
-        addCurrency(new Currency("ARS", "Argentine Peso", 0.027));
-        addCurrency(new Currency("GBP", "British Pound", 1.30));
-        addCurrency(new Currency("USD", "United States Dollar ", 1));
-        addCurrency(new Currency("RUB", "Russian Ruble", 0.015));
-        addCurrency(new Currency("EUR", "Euro", 1.14));
-        addCurrency(new Currency("JPY", "Japanese Yen", 0.0091));
-        addCurrency(new Currency("BRL", "Brazilian Real", 0.27));
+        addCurrencyData("ARS", "Argentine Peso", 0.027);
+        addCurrencyData("GBP", "British Pound", 1.30);
+        addCurrencyData("USD", "United States Dollar ", 1);
+        addCurrencyData("RUB", "Russian Ruble", 0.015);
+        addCurrencyData("EUR", "Euro", 1.14);
+        addCurrencyData("JPY", "Japanese Yen", 0.0091);
+        addCurrencyData("BRL", "Brazilian Real", 0.27);
     }
 
-    private void addCurrency(Currency currency) {
-        currencyExchangeRatesMap.put(currency.getTicker(), currency);
+    private void addCurrencyData(String ticker, String currencyName, double toDollarExchangeRate) {
+        currenciesMap.put(ticker, new Currency(ticker, currencyName));
+        currencyToDollarExchangeRatesMap.put(ticker, toDollarExchangeRate);
     }
 
     @Override
     public void clearData() {
-        currencyExchangeRatesMap.clear();
+        currenciesMap.clear();
     }
 
     public List<Currency> getCurrencies() {
-        return new ArrayList<>(currencyExchangeRatesMap.values());
+        return new ArrayList<>(currenciesMap.values());
     }
 
     public Currency getCurrency(String ticker) {
-        return currencyExchangeRatesMap.get(ticker);
+        return currenciesMap.get(ticker);
+    }
+
+    public double getToDollarExchangeRate(String ticker) {
+        return currencyToDollarExchangeRatesMap.get(ticker);
     }
 }

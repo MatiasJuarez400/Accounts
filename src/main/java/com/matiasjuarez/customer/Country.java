@@ -1,4 +1,4 @@
-package com.matiasjuarez;
+package com.matiasjuarez.customer;
 
 import lombok.Data;
 

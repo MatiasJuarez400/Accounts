@@ -6,11 +6,9 @@ import lombok.Data;
 public class Currency {
     private String ticker;
     private String name;
-    private double toDollarExchangeRate;
 
-    public Currency(String ticker, String name, double toDollarExchangeRate) {
+    public Currency(String ticker, String name) {
         this.ticker = ticker;
         this.name = name;
-        this.toDollarExchangeRate = toDollarExchangeRate;
     }
 }

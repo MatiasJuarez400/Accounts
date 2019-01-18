@@ -16,4 +16,9 @@ public class CurrencyDAOInMemory implements CurrencyDAO {
     public Currency getCurrency(String ticker) {
         return InMemoryDBsManager.getInstance().getCurrenciesInMemoryDB().getCurrency(ticker);
     }
+
+    @Override
+    public double getToDollarExchangeRate(String ticker) {
+        return InMemoryDBsManager.getInstance().getCurrenciesInMemoryDB().getToDollarExchangeRate(ticker);
+    }
 }
