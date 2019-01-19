@@ -1,19 +1,43 @@
 package com.matiasjuarez.monetaryaccount.transaction;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 import com.matiasjuarez.monetaryaccount.MonetaryAccount;
 import com.matiasjuarez.money.Money;
 
-
+import java.math.BigDecimal;
 import java.util.Date;
 
+@DatabaseTable(tableName = "transactions")
 public class Transaction {
-    private String originAccount;
-    private String targetAccount;
-    private Money transferedMoney;
-    private Money fees;
-    private Money effectivelyTransferedMoney;
+    @DatabaseField(generatedId = true)
+    private long id;
+    @DatabaseField
+    private long originAccount;
+    @DatabaseField
+    private long targetAccount;
+    @DatabaseField
+    private BigDecimal initialAmount;
+    @DatabaseField
+    private String initialCurrency;
+    @DatabaseField
+    private BigDecimal feesAmount;
+    @DatabaseField
+    private String feesCurrency;
+    @DatabaseField
+    private BigDecimal effectiveAmount;
+    @DatabaseField
+    private String effectiveCurrency;
+
+    @DatabaseField
     private Date executionDate;
+    @DatabaseField(foreign = true)
     private TransactionError transactionError;
+    @DatabaseField(foreign = true)
+    private MonetaryAccount monetaryAccount;
+
+    public Transaction() {
+    }
 
     public Transaction(MonetaryAccount origin, MonetaryAccount target) {
         this.originAccount = origin.getId();
@@ -21,52 +45,51 @@ public class Transaction {
         this.executionDate = new Date();
     }
 
-    public String getOriginAccount() {
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getOriginAccount() {
         return originAccount;
     }
 
-    public void setOriginAccount(String originAccount) {
-        this.originAccount = originAccount;
-    }
-
-    public String getTargetAccount() {
+    public long getTargetAccount() {
         return targetAccount;
     }
 
-    public void setTargetAccount(String targetAccount) {
-        this.targetAccount = targetAccount;
-    }
-
     public Money getTransferedMoney() {
-        return transferedMoney;
+        return new Money(initialAmount, initialCurrency);
     }
 
     public void setTransferedMoney(Money transferedMoney) {
-        this.transferedMoney = transferedMoney;
+        this.initialAmount = transferedMoney.getAmount();
+        this.initialCurrency = transferedMoney.getCurrencyCode();
     }
 
     public Money getFees() {
-        return fees;
+        return new Money(feesAmount, feesCurrency);
     }
 
     public void setFees(Money fees) {
-        this.fees = fees;
+        this.feesAmount = fees.getAmount();
+        this.feesCurrency = fees.getCurrencyCode();
     }
 
     public Money getEffectivelyTransferedMoney() {
-        return effectivelyTransferedMoney;
+        return new Money(effectiveAmount, effectiveCurrency);
     }
 
     public void setEffectivelyTransferedMoney(Money effectivelyTransferedMoney) {
-        this.effectivelyTransferedMoney = effectivelyTransferedMoney;
+        this.effectiveAmount = effectivelyTransferedMoney.getAmount();
+        this.effectiveCurrency = effectivelyTransferedMoney.getCurrencyCode();
     }
 
     public Date getExecutionDate() {
         return executionDate;
-    }
-
-    public void setExecutionDate(Date executionDate) {
-        this.executionDate = executionDate;
     }
 
     public TransactionError getTransactionError() {
