@@ -9,7 +9,7 @@ import java.util.Date;
 public class Transaction {
     private String originAccount;
     private String targetAccount;
-    private Money transferedMoney;
+    private Money transferredMoney;
     private Money fees;
     private Money effectivelyTransferedMoney;
     private Date executionDate;
@@ -37,12 +37,12 @@ public class Transaction {
         this.targetAccount = targetAccount;
     }
 
-    public Money getTransferedMoney() {
-        return transferedMoney;
+    public Money getTransferredMoney() {
+        return transferredMoney;
     }
 
-    public void setTransferedMoney(Money transferedMoney) {
-        this.transferedMoney = transferedMoney;
+    public void setTransferredMoney(Money transferredMoney) {
+        this.transferredMoney = transferredMoney;
     }
 
     public Money getFees() {
