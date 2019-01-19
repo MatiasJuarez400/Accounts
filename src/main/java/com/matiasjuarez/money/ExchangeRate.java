@@ -19,7 +19,6 @@ public class ExchangeRate {
             if (null == o) {
                 throw new IllegalArgumentException("ExchangeRate must be created as a valid instance");
             }
-
         }
     }
 
