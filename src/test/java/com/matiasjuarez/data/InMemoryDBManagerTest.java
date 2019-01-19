@@ -3,6 +3,7 @@ package com.matiasjuarez.data;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.matiasjuarez.customer.Country;
+import com.matiasjuarez.money.Currency;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,7 +21,7 @@ public class InMemoryDBManagerTest {
     @Test
     public void getDAOsFromManager_expectCreatedDAOsForPersistenceClasses() {
         Class[] persistedClasses = {
-                Country.class
+                Country.class, Currency.class
         };
 
         Assert.assertEquals(persistedClasses.length, inMemoryDBManager.getDaos().size());
