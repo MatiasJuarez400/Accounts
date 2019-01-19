@@ -1,8 +1,16 @@
 package com.matiasjuarez.money;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
+@DatabaseTable(tableName = "currencies")
 public class Currency {
+    @DatabaseField(id = true)
     private String ticker;
+    @DatabaseField
     private String name;
+
+    public Currency() {}
 
     public Currency(String ticker, String name) {
         this.ticker = ticker;
@@ -13,15 +21,7 @@ public class Currency {
         return ticker;
     }
 
-    public void setTicker(String ticker) {
-        this.ticker = ticker;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }

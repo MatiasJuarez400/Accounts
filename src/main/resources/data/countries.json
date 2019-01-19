@@ -1,0 +1,22 @@
+[
+  {
+    "code":"AR",
+    "name":"Argentina"
+  },
+  {
+    "code":"USA",
+    "name":"United States of America"
+  },
+  {
+    "code":"GB",
+    "name":"United Kingdom"
+  },
+  {
+    "code":"FR",
+    "name":"France"
+  },
+  {
+    "code":"DE",
+    "name":"Germany"
+  }
+]

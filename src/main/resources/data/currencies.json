@@ -1,0 +1,18 @@
+[
+  {
+    "ticker":"ARS",
+    "name":"Argentine Peso"
+  },
+  {
+    "ticker":"USD",
+    "name":"United States Dollar"
+  },
+  {
+    "ticker":"GBP",
+    "name":"British Pound"
+  },
+  {
+    "ticker":"EUR",
+    "name":"Euro"
+  }
+]
