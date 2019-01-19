@@ -1,9 +1,5 @@
 package com.matiasjuarez.monetaryaccount.transaction;
 
-import com.matiasjuarez.monetaryaccount.MonetaryAccount;
-import lombok.Data;
-
-@Data
 public class TransactionError {
     private String errorCode;
     private String reason;
@@ -13,5 +9,19 @@ public class TransactionError {
         this.reason = reason;
     }
 
+    public String getErrorCode() {
+        return errorCode;
+    }
 
+    public void setErrorCode(String errorCode) {
+        this.errorCode = errorCode;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
 }
