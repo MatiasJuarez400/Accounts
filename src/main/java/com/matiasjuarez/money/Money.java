@@ -1,24 +1,28 @@
 package com.matiasjuarez.money;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class Money {
+public class Money implements Serializable {
     private BigDecimal amount;
     private Currency currency;
 
-    public BigDecimal getAmount() {
-        return amount;
+    public Money(BigDecimal amount, Currency currency) {
+        this.amount = amount;
+        this.currency = currency;
     }
 
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
+    public Money(String amount, Currency currency) {
+        this(new BigDecimal(amount), currency);
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
     }
 
     public Currency getCurrency() {
         return currency;
     }
 
-    public void setCurrency(Currency currency) {
-        this.currency = currency;
-    }
+
 }

@@ -1,40 +1,37 @@
 package com.matiasjuarez.customer;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
+@DatabaseTable(tableName = "customers")
 public class Customer {
-    private String id;
+    @DatabaseField(generatedId = true)
+    private long id;
+    @DatabaseField
     private String name;
+    @DatabaseField
     private String lastname;
-    private Country country;
 
-    public String getId() {
-        return id;
-    }
+    private Customer() {}
 
-    public void setId(String id) {
-        this.id = id;
+    public Customer(String name, String lastname) {
+        this.name = name;
+        this.lastname = lastname;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getLastname() {
         return lastname;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public long getId() {
+        return id;
     }
 
-    public Country getCountry() {
-        return country;
-    }
-
-    public void setCountry(Country country) {
-        this.country = country;
+    public void setId(long id) {
+        this.id = id;
     }
 }
