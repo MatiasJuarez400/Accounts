@@ -1,7 +1,6 @@
 package com.matiasjuarez.data;
 
 import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.support.ConnectionSource;
 import com.matiasjuarez.customer.Country;
 import com.matiasjuarez.customer.Customer;
 import com.matiasjuarez.customer.CustomerAccount;
@@ -14,7 +13,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.math.BigDecimal;
 import java.sql.SQLException;
 
 public class InMemoryDBManagerTest {
@@ -26,33 +24,21 @@ public class InMemoryDBManagerTest {
     }
 
     @Test
-    public void getDAOsFromManager_expectCreatedDAOsForPersistenceClasses() throws Exception {
+    public void getDAOsFromManager_expectCreatedDAOsForPersistenceClasses() {
         Class[] persistedClasses = {
                 Country.class,
                 Currency.class,
                 Customer.class,
                 CustomerAccount.class,
-                MonetaryAccount.class
+                MonetaryAccount.class,
+                Transaction.class
         };
 
-//        Assert.assertEquals(persistedClasses.length, inMemoryDBManager.getDaos().size());
+        Assert.assertEquals(persistedClasses.length, inMemoryDBManager.getDaos().size());
 
         for (Class clazz : persistedClasses) {
             Assert.assertNotNull(inMemoryDBManager.getDaoForClass(clazz));
         }
-
-        Server webServer = Server.createWebServer("-web", "-webAllowOthers", "-webPort", "8082").start();
-
-        Dao<MonetaryAccount, Long> dao = inMemoryDBManager.getDaoForClass(MonetaryAccount.class);
-        MonetaryAccount monetaryAccount = new MonetaryAccount();
-//        monetaryAccount.setMoney(new Money(new BigDecimal(1234), "ARS"));
-        dao.create(monetaryAccount);
-
-        Dao<Transaction, Long> doa = inMemoryDBManager.getDaoForClass(Transaction.class);
-        Transaction trx = new Transaction();
-        trx.setTransferedMoney(new Money(new BigDecimal("123456.1566"), "CAD"));
-        doa.create(trx);
-        Thread.sleep(9999999);
     }
 
     @Test
@@ -66,5 +52,61 @@ public class InMemoryDBManagerTest {
         Assert.assertNotNull(argentina);
         Assert.assertEquals("AR", argentina.getCode());
         Assert.assertEquals("Argentina", argentina.getName());
+    }
+
+    @Test
+    public void insertMonetaryAccountWithTransaction_retrieveAssociatedCustomerAccount_expectCustomerAccountWithTransactionData() throws SQLException {
+        Dao<CustomerAccount, Long> DAOCustomerAccount = inMemoryDBManager.getDaoForClass(CustomerAccount.class);
+
+        Currency dollar = new Currency("USD", "Dollar");
+        Customer customer = new Customer("Matias", "Juarez");
+        CustomerAccount customerAccount = new CustomerAccount(customer, new Country("AR", "Argentina"));
+
+        MonetaryAccount monetaryAccount = new MonetaryAccount(dollar, customerAccount);
+        MonetaryAccount targetAccount = new MonetaryAccount(dollar, customerAccount);
+
+        customerAccount.addMonetaryAccount(monetaryAccount);
+        customerAccount.addMonetaryAccount(targetAccount);
+
+        Transaction transaction = new Transaction(monetaryAccount, targetAccount, new Money("100.00", dollar),
+                new Money("10.0", dollar), new Money("90.0", dollar));
+
+        monetaryAccount.addTransaction(transaction);
+        targetAccount.addTransaction(transaction);
+
+        DataSaveHelper.saveCustomerAccount(customerAccount);
+
+        CustomerAccount retrievedAccount = DAOCustomerAccount.queryForId(1L);
+
+        Assert.assertNotNull(retrievedAccount);
+    }
+
+    @Test
+    public void testServer() throws Exception {
+        Server webServer = Server.createWebServer("-web", "-webAllowOthers", "-webPort", "8082").start();
+
+        Dao<CustomerAccount, Long> DAOCustomerAccount = inMemoryDBManager.getDaoForClass(CustomerAccount.class);
+
+        Currency dollar = new Currency("USD", "Dollar");
+        Customer customer = new Customer("Matias", "Juarez");
+        CustomerAccount customerAccount = new CustomerAccount(customer, new Country("AR", "Argentina"));
+
+        MonetaryAccount monetaryAccount = new MonetaryAccount(dollar, customerAccount);
+        MonetaryAccount targetAccount = new MonetaryAccount(dollar, customerAccount);
+
+        customerAccount.addMonetaryAccount(monetaryAccount);
+        customerAccount.addMonetaryAccount(targetAccount);
+
+        Transaction transaction = new Transaction(monetaryAccount, targetAccount, new Money("100.00", dollar),
+                new Money("10.0", dollar), new Money("90.0", dollar));
+
+        monetaryAccount.addTransaction(transaction);
+        targetAccount.addTransaction(transaction);
+
+        DataSaveHelper.saveCustomerAccount(customerAccount);
+
+        CustomerAccount retrievedAccount = DAOCustomerAccount.queryForId(1L);
+
+        Thread.sleep(9999999);
     }
 }

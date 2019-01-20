@@ -5,12 +5,14 @@ import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "currencies")
 public class Currency {
-    @DatabaseField(id = true)
+    @DatabaseField(generatedId = true)
+    private long id;
+    @DatabaseField
     private String ticker;
     @DatabaseField
     private String name;
 
-    public Currency() {}
+    private Currency() {}
 
     public Currency(String ticker, String name) {
         this.ticker = ticker;

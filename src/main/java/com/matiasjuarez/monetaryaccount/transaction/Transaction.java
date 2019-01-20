@@ -3,6 +3,7 @@ package com.matiasjuarez.monetaryaccount.transaction;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.matiasjuarez.monetaryaccount.MonetaryAccount;
+import com.matiasjuarez.money.Currency;
 import com.matiasjuarez.money.Money;
 
 import java.math.BigDecimal;
@@ -12,36 +13,54 @@ import java.util.Date;
 public class Transaction {
     @DatabaseField(generatedId = true)
     private long id;
-    @DatabaseField
-    private long originAccount;
-    @DatabaseField
-    private long targetAccount;
+    @DatabaseField(foreign = true)
+    private MonetaryAccount originAccount;
+    @DatabaseField(foreign = true)
+    private MonetaryAccount targetAccount;
     @DatabaseField
     private BigDecimal initialAmount;
-    @DatabaseField
-    private String initialCurrency;
+    @DatabaseField(foreign = true, foreignAutoCreate = true)
+    private Currency initialCurrency;
     @DatabaseField
     private BigDecimal feesAmount;
-    @DatabaseField
-    private String feesCurrency;
+    @DatabaseField(foreign = true)
+    private Currency feesCurrency;
     @DatabaseField
     private BigDecimal effectiveAmount;
-    @DatabaseField
-    private String effectiveCurrency;
-
+    @DatabaseField(foreign = true)
+    private Currency effectiveCurrency;
     @DatabaseField
     private Date executionDate;
-    @DatabaseField(foreign = true)
-    private TransactionError transactionError;
-    @DatabaseField(foreign = true)
-    private MonetaryAccount monetaryAccount;
+    @DatabaseField
+    private String errorCode;
+    @DatabaseField
+    private String errorReason;
 
-    public Transaction() {
+    private Transaction() {}
+
+    public Transaction(MonetaryAccount origin, MonetaryAccount target,
+                       Money initialTransactionAmount, Money feesAmount, Money effectiveTransactionAmount) {
+        this(origin, target, initialTransactionAmount, feesAmount, effectiveTransactionAmount, null, null);
     }
 
-    public Transaction(MonetaryAccount origin, MonetaryAccount target) {
-        this.originAccount = origin.getId();
-        this.targetAccount = target.getId();
+    public Transaction(MonetaryAccount origin, MonetaryAccount target,
+                       Money initialTransactionAmount, Money feesAmount, Money effectiveTransactionAmount,
+                       String errorCode, String errorReason) {
+        this.originAccount = origin;
+        this.targetAccount = target;
+
+        this.initialAmount = initialTransactionAmount.getAmount();
+        this.initialCurrency = initialTransactionAmount.getCurrency();
+
+        this.feesAmount = feesAmount.getAmount();
+        this.feesCurrency = feesAmount.getCurrency();
+
+        this.effectiveAmount = effectiveTransactionAmount.getAmount();
+        this.effectiveCurrency = effectiveTransactionAmount.getCurrency();
+
+        this.errorCode = errorCode;
+        this.errorReason = errorReason;
+
         this.executionDate = new Date();
     }
 
@@ -53,11 +72,11 @@ public class Transaction {
         this.id = id;
     }
 
-    public long getOriginAccount() {
+    public MonetaryAccount getOriginAccount() {
         return originAccount;
     }
 
-    public long getTargetAccount() {
+    public MonetaryAccount getTargetAccount() {
         return targetAccount;
     }
 
@@ -65,38 +84,23 @@ public class Transaction {
         return new Money(initialAmount, initialCurrency);
     }
 
-    public void setTransferedMoney(Money transferedMoney) {
-        this.initialAmount = transferedMoney.getAmount();
-        this.initialCurrency = transferedMoney.getCurrencyCode();
-    }
-
     public Money getFees() {
         return new Money(feesAmount, feesCurrency);
-    }
-
-    public void setFees(Money fees) {
-        this.feesAmount = fees.getAmount();
-        this.feesCurrency = fees.getCurrencyCode();
     }
 
     public Money getEffectivelyTransferedMoney() {
         return new Money(effectiveAmount, effectiveCurrency);
     }
 
-    public void setEffectivelyTransferedMoney(Money effectivelyTransferedMoney) {
-        this.effectiveAmount = effectivelyTransferedMoney.getAmount();
-        this.effectiveCurrency = effectivelyTransferedMoney.getCurrencyCode();
-    }
-
     public Date getExecutionDate() {
         return executionDate;
     }
 
-    public TransactionError getTransactionError() {
-        return transactionError;
+    public String getErrorCode() {
+        return errorCode;
     }
 
-    public void setTransactionError(TransactionError transactionError) {
-        this.transactionError = transactionError;
+    public String getErrorReason() {
+        return errorReason;
     }
 }

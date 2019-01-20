@@ -12,12 +12,11 @@ public class Customer {
     @DatabaseField
     private String lastname;
 
+    private Customer() {}
+
     public Customer(String name, String lastname) {
         this.name = name;
         this.lastname = lastname;
-    }
-
-    public Customer() {
     }
 
     public String getName() {

@@ -13,23 +13,19 @@ import java.util.List;
 public class CustomerAccount {
     @DatabaseField(generatedId = true)
     private long id;
-    @DatabaseField(foreign = true)
+    @DatabaseField(foreign = true, foreignAutoCreate = true)
     private Customer customer;
     @ForeignCollectionField
     private Collection<MonetaryAccount> monetaryAccounts;
-    @DatabaseField(foreign = true)
+    @DatabaseField(foreign = true, foreignAutoCreate = true)
     private Country baseCountry;
+
+    private CustomerAccount() {}
 
     public CustomerAccount(Customer customer, Country baseCountry) {
         this.customer = customer;
         this.baseCountry = baseCountry;
         this.monetaryAccounts = new ArrayList<>();
-    }
-
-    public CustomerAccount() {}
-
-    public void addMonetaryAccount(MonetaryAccount monetaryAccount) {
-        this.monetaryAccounts.add(monetaryAccount);
     }
 
     public Customer getCustomer() {
@@ -50,5 +46,9 @@ public class CustomerAccount {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public void addMonetaryAccount(MonetaryAccount monetaryAccount) {
+        this.monetaryAccounts.add(monetaryAccount);
     }
 }

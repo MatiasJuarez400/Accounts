@@ -5,22 +5,23 @@ import java.math.BigDecimal;
 
 public class Money implements Serializable {
     private BigDecimal amount;
-    private String currencyCode;
+    private Currency currency;
 
-    public Money(BigDecimal amount, String currencyCode) {
+    public Money(BigDecimal amount, Currency currency) {
         this.amount = amount;
-        this.currencyCode = currencyCode;
+        this.currency = currency;
     }
 
-    public Money() {
+    public Money(String amount, Currency currency) {
+        this(new BigDecimal(amount), currency);
     }
 
     public BigDecimal getAmount() {
         return amount;
     }
 
-    public String getCurrencyCode() {
-        return currencyCode;
+    public Currency getCurrency() {
+        return currency;
     }
 
 

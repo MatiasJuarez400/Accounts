@@ -5,12 +5,14 @@ import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "countries")
 public class Country {
-    @DatabaseField(id = true)
+    @DatabaseField(generatedId = true)
+    private long id;
+    @DatabaseField
     private String code;
     @DatabaseField
     private String name;
 
-    public Country() {}
+    private Country() {}
 
     public Country(String code, String name) {
         this.code = code;
