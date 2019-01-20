@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-@DatabaseTable(tableName = "customerAccounts")
+@DatabaseTable(tableName = "customer_accounts")
 public class CustomerAccount {
     @DatabaseField(generatedId = true)
     private long id;
