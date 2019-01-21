@@ -101,6 +101,13 @@
       <version>1.7.25</version>
     </dependency>
 
+    <!-- Avoid Unmarshaller not found -->
+    <dependency>
+      <groupId>javax.xml.bind</groupId>
+      <artifactId>jaxb-api</artifactId>
+      <version>2.2.11</version>
+    </dependency>
+
   </dependencies>
 
   <build>

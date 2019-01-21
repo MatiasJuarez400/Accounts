@@ -1,7 +1,7 @@
 package com.matiasjuarez.api;
 
 import com.matiasjuarez.api.exception.InvalidCurrencyPairException;
-import com.matiasjuarez.money.ExchangeRate;
+import com.matiasjuarez.money.model.ExchangeRate;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
@@ -13,7 +13,7 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
     public static final int BID = 0;
     public static final int OFFER = 1;
     private Properties exchangeRateValues = new Properties();
-    private static final String EXCHANGE_RATE_PROPERTIES = "exchangeRates.properties";
+    private static final String EXCHANGE_RATE_PROPERTIES = "data/exchangeRates.properties";
     static private ExchangeRateServiceImpl exchangeRateService;
 
     private ExchangeRateServiceImpl() {

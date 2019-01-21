@@ -1,7 +1,7 @@
 //package com.matiasjuarez.monetaryaccount.transaction;
 //
 //import com.matiasjuarez.monetaryaccount.MonetaryAccount;
-//import com.matiasjuarez.money.Money;
+//import com.matiasjuarez.money.model.Money;
 //
 //public class TransactionFeesCalculator {
 //

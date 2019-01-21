@@ -1,7 +1,7 @@
 package com.matiasjuarez.api;
 
 import com.matiasjuarez.api.exception.InvalidCurrencyPairException;
-import com.matiasjuarez.money.ExchangeRate;
+import com.matiasjuarez.money.model.ExchangeRate;
 
 import java.math.BigDecimal;
 
