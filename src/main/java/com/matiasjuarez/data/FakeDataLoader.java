@@ -6,6 +6,8 @@ import com.j256.ormlite.dao.Dao;
 import com.matiasjuarez.customer.Country;
 import com.matiasjuarez.money.model.Currency;
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FakeDataLoader {
+    private static final Logger LOGGER = LoggerFactory.getLogger(FakeDataLoader.class);
+
     public void loadData() {
         try {
             loadData("data/countries.json", new TypeReference<Country>() {});
@@ -25,6 +29,8 @@ public class FakeDataLoader {
     }
 
     private <T> void loadData(String resource, TypeReference<T> typeReference) throws IOException, SQLException {
+        LOGGER.info("Loading data from {}", resource);
+
         String jsonData = readDataFromResource(resource);
 
         ObjectMapper objectMapper = new ObjectMapper();

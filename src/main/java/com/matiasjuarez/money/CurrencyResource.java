@@ -17,12 +17,8 @@ public class CurrencyResource {
     private CurrencyService currencyService;
 
     @GET
-    public Response hello() {
-        try {
-            List<Currency> currencies = currencyService.getCurrencies();
-            return Response.ok(JsonConverter.convert(currencies), MediaType.APPLICATION_JSON).build();
-        } catch (SQLException e) {
-            return Response.serverError().entity(e.getMessage()).build();
-        }
+    public Response hello() throws SQLException {
+        List<Currency> currencies = currencyService.getCurrencies();
+        return Response.ok(JsonConverter.convert(currencies), MediaType.APPLICATION_JSON).build();
     }
 }

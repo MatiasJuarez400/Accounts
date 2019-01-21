@@ -8,7 +8,7 @@ public class JsonConverter {
         ObjectMapper objectMapper = new ObjectMapper();
 
         try {
-            return objectMapper.writeValueAsString(object);
+            return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(object);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
