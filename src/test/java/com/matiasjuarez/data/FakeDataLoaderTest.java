@@ -2,7 +2,7 @@ package com.matiasjuarez.data;
 
 import com.j256.ormlite.dao.Dao;
 import com.matiasjuarez.customer.Country;
-import com.matiasjuarez.money.model.Currency;
+import com.matiasjuarez.money.Currency;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

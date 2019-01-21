@@ -5,8 +5,8 @@ import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.matiasjuarez.customer.CustomerAccount;
 import com.matiasjuarez.monetaryaccount.transaction.Transaction;
-import com.matiasjuarez.money.model.Currency;
-import com.matiasjuarez.money.model.Money;
+import com.matiasjuarez.money.Currency;
+import com.matiasjuarez.money.Money;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

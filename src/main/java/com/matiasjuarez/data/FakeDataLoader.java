@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.j256.ormlite.dao.Dao;
 import com.matiasjuarez.customer.Country;
-import com.matiasjuarez.money.model.Currency;
+import com.matiasjuarez.money.Currency;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,4 @@
-package com.matiasjuarez.errorhandling;
+package com.matiasjuarez.api.errorhandling;
 
 import javax.ws.rs.core.Response;
 

@@ -10,7 +10,7 @@ import com.matiasjuarez.customer.Customer;
 import com.matiasjuarez.customer.CustomerAccount;
 import com.matiasjuarez.monetaryaccount.MonetaryAccount;
 import com.matiasjuarez.monetaryaccount.transaction.Transaction;
-import com.matiasjuarez.money.model.Currency;
+import com.matiasjuarez.money.Currency;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

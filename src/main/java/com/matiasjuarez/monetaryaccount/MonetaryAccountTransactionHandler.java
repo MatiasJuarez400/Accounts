@@ -1,7 +1,7 @@
 //package com.matiasjuarez.monetaryaccount;
 //
 //import com.matiasjuarez.monetaryaccount.transaction.TransactionErrorBuilder;
-//import com.matiasjuarez.money.model.Money;
+//import com.matiasjuarez.money.Money;
 //import com.matiasjuarez.monetaryaccount.transaction.Transaction;
 //
 //public class MonetaryAccountTransactionHandler {

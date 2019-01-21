@@ -1,7 +1,7 @@
-package com.matiasjuarez.api;
+package com.matiasjuarez.exchangeRateService;
 
-import com.matiasjuarez.api.exception.InvalidCurrencyPairException;
-import com.matiasjuarez.money.model.ExchangeRate;
+import com.matiasjuarez.exchangeRateService.exception.InvalidCurrencyPairException;
+import com.matiasjuarez.money.ExchangeRate;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;

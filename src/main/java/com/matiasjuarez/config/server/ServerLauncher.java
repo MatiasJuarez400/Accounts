@@ -1,7 +1,7 @@
 package com.matiasjuarez.config.server;
 
 import com.matiasjuarez.config.injection.AppResourceConfig;
-import com.matiasjuarez.money.CurrencyResource;
+import com.matiasjuarez.api.currency.CurrencyResource;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
