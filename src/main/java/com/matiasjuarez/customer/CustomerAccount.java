@@ -7,17 +7,16 @@ import com.matiasjuarez.monetaryaccount.MonetaryAccount;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 @DatabaseTable(tableName = "customer_accounts")
 public class CustomerAccount {
     @DatabaseField(generatedId = true)
     private Long id;
-    @DatabaseField(foreign = true, foreignAutoCreate = true)
+    @DatabaseField(foreign = true, foreignAutoCreate = true, foreignAutoRefresh = true)
     private Customer customer;
     @ForeignCollectionField
     private Collection<MonetaryAccount> monetaryAccounts;
-    @DatabaseField(foreign = true, foreignAutoCreate = true)
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Country baseCountry;
 
     private CustomerAccount() {}

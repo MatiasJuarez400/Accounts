@@ -11,6 +11,7 @@ import com.matiasjuarez.money.Money;
 import org.h2.tools.Server;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.sql.SQLException;
@@ -82,6 +83,7 @@ public class InMemoryDBManagerTest {
     }
 
     @Test
+    @Ignore
     public void testServer() throws Exception {
         Server webServer = Server.createWebServer("-web", "-webAllowOthers", "-webPort", "8082").start();
 

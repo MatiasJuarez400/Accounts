@@ -37,15 +37,15 @@ public class CustomerResource {
         return Response.ok(JsonConverter.convert(customer)).build();
     }
 
-    @PUT
+    @POST
     public Response createCustomer(Map<String, Object> request) throws SQLException {
         Customer newCustomer = validateRequestBodyData(request);
         newCustomer = customerService.createCustomer(newCustomer);
 
-        return Response.ok(JsonConverter.convert(newCustomer)).build();
+        return Response.status(Response.Status.CREATED).entity(JsonConverter.convert(newCustomer)).build();
     }
 
-    @POST
+    @PUT
     @Path("/{customerId}{format: (\\d+)?}")
     public Response updateCustomer(@PathParam("customerId") long customerId, Map<String, Object> requestBody) throws SQLException {
         Customer customerToUpdate = validateRequestBodyData(requestBody);

@@ -9,8 +9,7 @@ public class DBProperties {
     private String username;
     private String password;
     private String driverClassName;
-
-    private static final String PROPERTIES_SOURCE = "config/h2.properties";
+    private String serverPort;
 
     private static DBProperties instance;
 
@@ -21,6 +20,7 @@ public class DBProperties {
         this.username = properties.getProperty("username");
         this.password = properties.getProperty("password");
         this.driverClassName = properties.getProperty("driverClassName");
+        this.serverPort = properties.getProperty("server.port");
     }
 
     public static DBProperties getInstance() {
@@ -45,5 +45,9 @@ public class DBProperties {
 
     public String getDriverClassName() {
         return driverClassName;
+    }
+
+    public String getServerPort() {
+        return serverPort;
     }
 }

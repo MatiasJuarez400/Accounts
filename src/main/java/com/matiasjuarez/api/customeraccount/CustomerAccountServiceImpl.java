@@ -6,7 +6,6 @@ import com.matiasjuarez.api.EntityNames;
 import com.matiasjuarez.api.country.CountryService;
 import com.matiasjuarez.api.customer.CustomerService;
 import com.matiasjuarez.api.errorhandling.exceptions.EntityNotFoundException;
-import com.matiasjuarez.api.errorhandling.exceptions.InconsistentDataException;
 import com.matiasjuarez.api.errorhandling.exceptions.UpdateNotPerformedException;
 import com.matiasjuarez.customer.CustomerAccount;
 
@@ -24,6 +23,8 @@ public class CustomerAccountServiceImpl extends BaseService implements CustomerA
         this.customerService = customerService;
         this.countryService = countryService;
     }
+
+    public CustomerAccountServiceImpl() {}
 
     @Override
     public CustomerAccount getCustomerAccount(Long id) throws SQLException {
@@ -53,7 +54,7 @@ public class CustomerAccountServiceImpl extends BaseService implements CustomerA
             throw new UpdateNotPerformedException(EntityNames.CUSTOMER_ACCOUNT, newCustomerAcountData.getId());
         }
 
-        return storedCustomerAccount;
+        return getCustomerAccount(newCustomerAcountData.getId());
     }
 
     @Override
@@ -62,7 +63,7 @@ public class CustomerAccountServiceImpl extends BaseService implements CustomerA
 
         CustomerAccount newCustomerAccount = getDao().createIfNotExists(customerAccount);
 
-        return newCustomerAccount;
+        return getCustomerAccount(newCustomerAccount.getId());
     }
 
     private Dao<CustomerAccount, Long> getDao() {
@@ -70,16 +71,8 @@ public class CustomerAccountServiceImpl extends BaseService implements CustomerA
     }
 
     private void validateForeignData(CustomerAccount newCustomerAcountData) throws SQLException {
-        if (newCustomerAcountData.getCustomer() == null || newCustomerAcountData.getCustomer().getId() == null) {
-            throw new InconsistentDataException("Customer data must be present and have an id");
-        }
-
-        if (newCustomerAcountData.getBaseCountry() == null || newCustomerAcountData.getBaseCountry().getCode() == null) {
-            throw new InconsistentDataException("Country data must be present and have a country code");
-        }
-
         if (countryService.getCountry(newCustomerAcountData.getBaseCountry().getCode()) == null) {
-            throw new EntityNotFoundException(EntityNames.COUNTRY, newCustomerAcountData.getBaseCountry().getId());
+            throw new EntityNotFoundException(EntityNames.COUNTRY, newCustomerAcountData.getBaseCountry().getCode());
         }
 
         if (customerService.getCustomer(newCustomerAcountData.getCustomer().getId()) == null) {

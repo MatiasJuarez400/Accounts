@@ -2,8 +2,11 @@ package com.matiasjuarez.api.customeraccount;
 
 import com.matiasjuarez.api.EntityNames;
 import com.matiasjuarez.api.errorhandling.exceptions.EntityNotFoundException;
+import com.matiasjuarez.customer.Country;
+import com.matiasjuarez.customer.Customer;
 import com.matiasjuarez.customer.CustomerAccount;
 import com.matiasjuarez.utils.JsonConverter;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -11,13 +14,17 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
-@Path("/customeraccount")
+@Path("/customeraccounts")
 @Produces(MediaType.APPLICATION_JSON)
 public class CustomerAccountResource {
 
     @Inject
     private CustomerAccountService customerAccountService;
+
+    private static final String COUNTRY_CODE = "countryCode";
+    private static final String CUSTOMER_ID = "customerId";
 
     public CustomerAccountResource(CustomerAccountService customerAccountService) {
         this.customerAccountService = customerAccountService;
@@ -44,9 +51,60 @@ public class CustomerAccountResource {
         return Response.ok(JsonConverter.convert(customerAccounts)).build();
     }
 
-    @POST
+    @PUT
     @Path("/{accountId}")
-    public Response updateCustomerAccount() {
+    public Response updateCustomerAccount(@PathParam("accountId") Long accountId, Map<String, Object> requestBody) throws SQLException {
+        CustomerAccount rawData = validateDataAndCreateRawCustomerAccount(requestBody);
+        rawData.setId(accountId);
 
+        CustomerAccount updatedCustomerAccount = customerAccountService.updateCustomerAccount(rawData);
+
+        return Response.ok(JsonConverter.convert(updatedCustomerAccount)).build();
+    }
+
+    @POST
+    public Response createCustomerAccount(Map<String, Object> requestBody) throws SQLException {
+        CustomerAccount rawData = validateDataAndCreateRawCustomerAccount(requestBody);
+
+        CustomerAccount created = customerAccountService.createCustomerAccount(rawData);
+
+        return Response.status(Response.Status.CREATED).entity(JsonConverter.convert(created)).build();
+    }
+
+    private CustomerAccount validateDataAndCreateRawCustomerAccount(Map<String, Object> requestBody) {
+        if (requestBody == null) {
+            throw getBadRequestException();
+        }
+
+        String countryCode = (String) requestBody.get(COUNTRY_CODE);
+        Object rawCustomerId = requestBody.get(CUSTOMER_ID);
+        Long customerId;
+
+        if (StringUtils.isEmpty((String) requestBody.get(COUNTRY_CODE)) || requestBody.get(CUSTOMER_ID) == null) {
+            throw getBadRequestException();
+        }
+
+        try {
+            customerId = Long.valueOf((Integer)rawCustomerId);
+        } catch (Exception e) {
+            throw new BadRequestException(
+                    String.format("Value for %s must be a number. Received [%s]",
+                            CUSTOMER_ID, rawCustomerId)
+            );
+        }
+
+
+        Country country = new Country();
+        country.setCode(countryCode);
+
+        Customer customer = new Customer();
+        customer.setId(customerId);
+
+        return new CustomerAccount(customer, country);
+    }
+
+    private BadRequestException getBadRequestException() {
+        return new BadRequestException(
+                String.format("Values for %s and %s must be present in request body", COUNTRY_CODE, CUSTOMER_ID));
     }
 }
