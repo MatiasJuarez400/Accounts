@@ -19,12 +19,6 @@ public class Customer {
         this.lastname = lastname;
     }
 
-    public Customer(Long id, String name, String lastname) {
-        this.id = id;
-        this.name = name;
-        this.lastname = lastname;
-    }
-
     public Long getId() {
         return id;
     }

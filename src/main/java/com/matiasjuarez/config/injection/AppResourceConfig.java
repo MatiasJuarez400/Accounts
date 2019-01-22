@@ -31,5 +31,7 @@ public class AppResourceConfig extends ResourceConfig {
         register(BadRequestExceptionMapper.class);
         register(UpdateNotPerformedExceptionMapper.class);
         register(InconsistentDataExceptionMapper.class);
+        register(IllegalUpdateExceptionMapper.class);
+        register(ExceptionMapper.class);
     }
 }

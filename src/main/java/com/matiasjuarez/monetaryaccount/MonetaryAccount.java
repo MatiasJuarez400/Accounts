@@ -20,51 +20,36 @@ public class MonetaryAccount {
     private Long id;
     @DatabaseField
     private BigDecimal funds;
-    @DatabaseField(foreign = true, foreignAutoCreate = true, foreignAutoRefresh = true)
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Currency accountCurrency;
     @DatabaseField
     private MonetaryAccountStatus accountStatus;
-    @ForeignCollectionField(foreignFieldName = "originAccount")
+    @ForeignCollectionField
     private Collection<Transaction> transactions;
     @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private CustomerAccount customerAccount;
 
-    public MonetaryAccount() {}
-
-    public MonetaryAccount(Currency accountCurrency, CustomerAccount customerAccount, MonetaryAccountStatus initialStatus) {
-        this.accountCurrency = accountCurrency;
-        this.customerAccount = customerAccount;
-        this.accountStatus = initialStatus;
-        this.funds = new BigDecimal(0.0);
+    public MonetaryAccount() {
         this.transactions = new ArrayList<>();
     }
 
-    public MonetaryAccount(Currency accountCurrency, CustomerAccount customerAccount) {
-        this(accountCurrency, customerAccount, MonetaryAccountStatus.OPERATIVE);
+    public MonetaryAccount(BigDecimal funds, Currency accountCurrency, MonetaryAccountStatus accountStatus, CustomerAccount customerAccount) {
+        this.funds = funds;
+        this.accountCurrency = accountCurrency;
+        this.accountStatus = accountStatus;
+        this.customerAccount = customerAccount;
     }
 
-    public void setMoney(Money money) {
-        if (money.getCurrency() != this.accountCurrency) {
-            throw new IllegalArgumentException("The currency of the monetaryAccount differs from the currency of the money object");
-        }
-
-        this.funds = money.getAmount();
+    public void changeStatus(boolean isActive) {
+        this.accountStatus = isActive ? MonetaryAccountStatus.OPERATIVE : MonetaryAccountStatus.INACTIVE;
     }
 
     public boolean isOperative() {
         return this.accountStatus == MonetaryAccountStatus.OPERATIVE;
     }
 
-    public void setAccountStatus(MonetaryAccountStatus accountStatus) {
-        this.accountStatus = accountStatus;
-    }
-
-    public MonetaryAccountStatus getAccountStatus() {
-        return accountStatus;
-    }
-
-    public void changeStatus(boolean isActive) {
-        this.accountStatus = isActive ? MonetaryAccountStatus.OPERATIVE : MonetaryAccountStatus.INACTIVE;
+    public boolean addTransaction(Transaction transaction) {
+        return this.transactions.add(transaction);
     }
 
     public Long getId() {
@@ -75,16 +60,36 @@ public class MonetaryAccount {
         this.id = id;
     }
 
-    public Money getFunds() {
-        return new Money(this.funds, this.accountCurrency);
+    public BigDecimal getFunds() {
+        return funds;
     }
 
-    public List<Transaction> getTransactions() {
-        return (ArrayList) transactions;
+    public void setFunds(BigDecimal funds) {
+        this.funds = funds;
     }
 
-    public boolean addTransaction(Transaction transaction) {
-        return this.transactions.add(transaction);
+    public Currency getAccountCurrency() {
+        return accountCurrency;
+    }
+
+    public void setAccountCurrency(Currency accountCurrency) {
+        this.accountCurrency = accountCurrency;
+    }
+
+    public MonetaryAccountStatus getAccountStatus() {
+        return accountStatus;
+    }
+
+    public void setAccountStatus(MonetaryAccountStatus accountStatus) {
+        this.accountStatus = accountStatus;
+    }
+
+    public Collection<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(Collection<Transaction> transactions) {
+        this.transactions = transactions;
     }
 
     public CustomerAccount getCustomerAccount() {
@@ -93,7 +98,6 @@ public class MonetaryAccount {
 
     public void setCustomerAccount(CustomerAccount customerAccount) {
         this.customerAccount = customerAccount;
-        customerAccount.addMonetaryAccount(this);
     }
 
     @Override

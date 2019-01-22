@@ -1,5 +1,7 @@
 package com.matiasjuarez.customer;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
@@ -12,27 +14,24 @@ import java.util.Collection;
 public class CustomerAccount {
     @DatabaseField(generatedId = true)
     private Long id;
-    @DatabaseField(foreign = true, foreignAutoCreate = true, foreignAutoRefresh = true)
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Customer customer;
     @ForeignCollectionField
+    @JsonIgnore
     private Collection<MonetaryAccount> monetaryAccounts;
     @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Country baseCountry;
 
-    private CustomerAccount() {}
+    public CustomerAccount() {
+        this.monetaryAccounts = new ArrayList<>();
+    }
 
     public CustomerAccount(Long id) {
         this.id = id;
     }
 
-    public CustomerAccount(Customer customer, Country baseCountry) {
-        this.customer = customer;
-        this.baseCountry = baseCountry;
-        this.monetaryAccounts = new ArrayList<>();
-    }
-
-    public Customer getCustomer() {
-        return customer;
+    public void addMonetaryAccount(MonetaryAccount monetaryAccount) {
+        this.monetaryAccounts.add(monetaryAccount);
     }
 
     public Long getId() {
@@ -43,8 +42,20 @@ public class CustomerAccount {
         this.id = id;
     }
 
+    public Customer getCustomer() {
+        return customer;
+    }
+
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public Collection<MonetaryAccount> getMonetaryAccounts() {
+        return monetaryAccounts;
+    }
+
+    public void setMonetaryAccounts(Collection<MonetaryAccount> monetaryAccounts) {
+        this.monetaryAccounts = monetaryAccounts;
     }
 
     public Country getBaseCountry() {
@@ -53,13 +64,5 @@ public class CustomerAccount {
 
     public void setBaseCountry(Country baseCountry) {
         this.baseCountry = baseCountry;
-    }
-
-    public Collection<MonetaryAccount> getMonetaryAccounts() {
-        return monetaryAccounts;
-    }
-
-    public void addMonetaryAccount(MonetaryAccount monetaryAccount) {
-        this.monetaryAccounts.add(monetaryAccount);
     }
 }

@@ -19,7 +19,7 @@ public class Transaction {
     private MonetaryAccount targetAccount;
     @DatabaseField
     private BigDecimal initialAmount;
-    @DatabaseField(foreign = true, foreignAutoCreate = true)
+    @DatabaseField(foreign = true)
     private Currency initialCurrency;
     @DatabaseField
     private BigDecimal feesAmount;

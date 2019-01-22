@@ -8,7 +8,6 @@ import com.matiasjuarez.customer.CustomerAccount;
 import com.matiasjuarez.monetaryaccount.MonetaryAccount;
 import com.matiasjuarez.monetaryaccount.MonetaryAccountStatus;
 import com.matiasjuarez.money.Currency;
-import com.matiasjuarez.utils.JsonConverter;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -19,7 +18,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -50,17 +49,19 @@ public class MonetaryAccountResource {
         ApiUtils.validateIfValuesArePresent(requestBody, ACCOUNT_CURRENCY_TICKER, STATUS_ACTIVE);
 
         String accountCurrency = (String) requestBody.get(ACCOUNT_CURRENCY_TICKER);
+        Currency currency = new Currency(accountCurrency);
 
         Boolean statusActive =
                 ApiUtils.convertRequestValueToBoolean(STATUS_ACTIVE, requestBody.get(STATUS_ACTIVE));
-
         MonetaryAccountStatus monetaryAccountStatus = statusActive ?
                 MonetaryAccountStatus.OPERATIVE : MonetaryAccountStatus.INACTIVE;
 
-        MonetaryAccount monetaryAccount = new MonetaryAccount(new Currency(accountCurrency),
-                new CustomerAccount(customerAccountId), monetaryAccountStatus);
+        CustomerAccount customerAccount = new CustomerAccount(customerAccountId);
 
-        MonetaryAccount createdMonetaryAccount = monetaryAccountService.createMonetaryAccount(monetaryAccount);
+
+        MonetaryAccount monetaryAccountToCreate = new MonetaryAccount(new BigDecimal(0), currency, monetaryAccountStatus, customerAccount);
+
+        MonetaryAccount createdMonetaryAccount = monetaryAccountService.createMonetaryAccount(monetaryAccountToCreate);
 
         return ApiUtils.buildCreatedResponse(createdMonetaryAccount);
     }
@@ -74,21 +75,10 @@ public class MonetaryAccountResource {
         return ApiUtils.buildOkResponse(monetaryAccounts);
     }
 
-    @GET
-    @Path("/{monetaryAccountId}")
-    public Response getMonetaryAccount(@PathParam("monetaryAccountId") Long monetaryAccountId) throws SQLException {
-        MonetaryAccount monetaryAccount = monetaryAccountService.getMonetaryAccount(monetaryAccountId);
-
-        if (monetaryAccount == null) {
-            throw new EntityNotFoundException(EntityNames.MONETARY_ACCOUNT, monetaryAccountId);
-        }
-
-        return ApiUtils.buildOkResponse(monetaryAccount);
-    }
-
     @PUT
     @Path("/{monetaryAccountId}")
     public Response updateMonetaryAccount(@PathParam("monetaryAccountId") Long monetaryAccountId,
+                                          @PathParam("customerAccountId") Long customerAccountId,
                                           Map<String, Object> requestBody) throws SQLException {
 
         ApiUtils.validateIfValuesArePresent(requestBody, STATUS_ACTIVE);
@@ -97,6 +87,8 @@ public class MonetaryAccountResource {
                 ApiUtils.convertRequestValueToBoolean(STATUS_ACTIVE, requestBody.get(STATUS_ACTIVE));
 
         MonetaryAccount monetaryAccountUpdateData = new MonetaryAccount();
+        monetaryAccountUpdateData.setId(monetaryAccountId);
+        monetaryAccountUpdateData.setCustomerAccount(new CustomerAccount(customerAccountId));
         monetaryAccountUpdateData.changeStatus(statusActive);
 
         MonetaryAccount updatedMonetaryAccount = monetaryAccountService.updateMonetaryAccount(monetaryAccountUpdateData);

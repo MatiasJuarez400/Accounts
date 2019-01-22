@@ -104,7 +104,11 @@ public class CustomerAccountResource {
         Customer customer = new Customer();
         customer.setId(customerId);
 
-        return new CustomerAccount(customer, country);
+        CustomerAccount rawCustomerAccount = new CustomerAccount();
+        rawCustomerAccount.setCustomer(customer);
+        rawCustomerAccount.setBaseCountry(country);
+
+        return rawCustomerAccount;
     }
 
     private BadRequestException getBadRequestException() {

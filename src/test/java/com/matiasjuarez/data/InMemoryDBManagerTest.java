@@ -61,10 +61,17 @@ public class InMemoryDBManagerTest {
 
         Currency dollar = new Currency("USD", "Dollar");
         Customer customer = new Customer("Matias", "Juarez");
-        CustomerAccount customerAccount = new CustomerAccount(customer, new Country("AR", "Argentina"));
+        CustomerAccount customerAccount = new CustomerAccount();
+        customerAccount.setCustomer(customer);
+        customerAccount.setBaseCountry(new Country("AR", "Argentina"));
 
-        MonetaryAccount monetaryAccount = new MonetaryAccount(dollar, customerAccount);
-        MonetaryAccount targetAccount = new MonetaryAccount(dollar, customerAccount);
+        MonetaryAccount monetaryAccount = new MonetaryAccount();
+        monetaryAccount.setAccountCurrency(dollar);
+        monetaryAccount.setCustomerAccount(customerAccount);
+
+        MonetaryAccount targetAccount = new MonetaryAccount();
+        targetAccount.setAccountCurrency(dollar);
+        targetAccount.setCustomerAccount(customerAccount);
 
         customerAccount.addMonetaryAccount(monetaryAccount);
         customerAccount.addMonetaryAccount(targetAccount);
@@ -91,10 +98,17 @@ public class InMemoryDBManagerTest {
 
         Currency dollar = new Currency("USD", "Dollar");
         Customer customer = new Customer("Matias", "Juarez");
-        CustomerAccount customerAccount = new CustomerAccount(customer, new Country("AR", "Argentina"));
+        CustomerAccount customerAccount = new CustomerAccount();
+        customerAccount.setCustomer(customer);
+        customerAccount.setBaseCountry(new Country("AR", "Argentina"));
 
-        MonetaryAccount monetaryAccount = new MonetaryAccount(dollar, customerAccount);
-        MonetaryAccount targetAccount = new MonetaryAccount(dollar, customerAccount);
+        MonetaryAccount monetaryAccount = new MonetaryAccount();
+        monetaryAccount.setAccountCurrency(dollar);
+        monetaryAccount.setCustomerAccount(customerAccount);
+
+        MonetaryAccount targetAccount = new MonetaryAccount();
+        targetAccount.setAccountCurrency(dollar);
+        targetAccount.setCustomerAccount(customerAccount);
 
         customerAccount.addMonetaryAccount(monetaryAccount);
         customerAccount.addMonetaryAccount(targetAccount);
