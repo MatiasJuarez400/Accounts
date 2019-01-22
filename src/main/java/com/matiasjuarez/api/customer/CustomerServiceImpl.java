@@ -1,6 +1,8 @@
 package com.matiasjuarez.api.customer;
 
 import com.j256.ormlite.dao.Dao;
+import com.matiasjuarez.api.errorhandling.exceptions.EntityNotFoundException;
+import com.matiasjuarez.api.errorhandling.exceptions.UpdateNotPerformedException;
 import com.matiasjuarez.customer.Customer;
 import com.matiasjuarez.data.InMemoryDBManager;
 
@@ -8,6 +10,8 @@ import java.sql.SQLException;
 
 public class CustomerServiceImpl implements CustomerService {
     private InMemoryDBManager inMemoryDBManager;
+
+    private static final String ENTITY_NAME = "customer";
 
     public CustomerServiceImpl() {
         this.inMemoryDBManager = InMemoryDBManager.getInstance();
@@ -25,15 +29,20 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer updateCustomer(Customer customer) throws SQLException {
-        int updatedCustomerId = getCustomerDao().update(customer);
-        return customer;
-    }
+    public Customer updateCustomer(Customer customer) throws SQLException, EntityNotFoundException {
+        Customer storedCustomer = getCustomer(customer.getId());
 
-    @Override
-    public boolean deleteCustomer(long id) throws SQLException {
-        int deleteId = getCustomerDao().deleteById(id);
-        return true;
+        if (storedCustomer == null) {
+            throw new EntityNotFoundException(ENTITY_NAME, customer.getId());
+        }
+
+        int updateResult = getCustomerDao().update(customer);
+
+        if (updateResult != 1) {
+            throw new UpdateNotPerformedException(ENTITY_NAME, customer.getId());
+        }
+
+        return customer;
     }
 
     private Dao<Customer, Long> getCustomerDao() {

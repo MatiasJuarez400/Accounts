@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.j256.ormlite.dao.Dao;
 import com.matiasjuarez.customer.Country;
+import com.matiasjuarez.customer.Customer;
 import com.matiasjuarez.money.Currency;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -23,6 +24,7 @@ public class FakeDataLoader {
         try {
             loadData("data/countries.json", new TypeReference<Country>() {});
             loadData("data/currencies.json", new TypeReference<Currency>() {});
+            loadData("data/customers.json", new TypeReference<Customer>() {});
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

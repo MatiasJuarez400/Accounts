@@ -1,10 +1,7 @@
 package com.matiasjuarez.config.injection;
 
 import com.matiasjuarez.api.customer.CustomerResource;
-import com.matiasjuarez.api.errorhandling.BadRequestExceptionMapper;
-import com.matiasjuarez.api.errorhandling.EntityNotFoundExceptionMapper;
-import com.matiasjuarez.api.errorhandling.RuntimeExceptionMapper;
-import com.matiasjuarez.api.errorhandling.SQLExceptionMapper;
+import com.matiasjuarez.api.errorhandling.*;
 import com.matiasjuarez.api.currency.CurrencyResource;
 import org.glassfish.jersey.server.ResourceConfig;
 
@@ -26,5 +23,6 @@ public class AppResourceConfig extends ResourceConfig {
         register(RuntimeExceptionMapper.class);
         register(EntityNotFoundExceptionMapper.class);
         register(BadRequestExceptionMapper.class);
+        register(UpdateNotPerformedExceptionMapper.class);
     }
 }

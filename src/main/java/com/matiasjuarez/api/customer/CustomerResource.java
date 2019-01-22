@@ -7,7 +7,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
@@ -28,7 +27,7 @@ public class CustomerResource {
 
     @GET
     @Path("/{customerId}{format: (\\d+)?}")
-    public Response getCustomer(@PathParam("customerId") long customerId) throws SQLException, EntityNotFoundException {
+    public Response getCustomer(@PathParam("customerId") long customerId) throws SQLException {
         Customer customer = customerService.getCustomer(customerId);
 
         if (customer == null) {
@@ -39,18 +38,32 @@ public class CustomerResource {
     }
 
     @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
     public Response createCustomer(Map<String, Object> request) throws SQLException {
-        String customerName = (String) request.get("name");
-        String customerLastname = (String) request.get("lastname");
+        Customer newCustomer = validateRequestBodyData(request);
+        newCustomer = customerService.createCustomer(newCustomer);
+
+        return Response.ok(JsonConverter.convert(newCustomer)).build();
+    }
+
+    @POST
+    @Path("/{customerId}{format: (\\d+)?}")
+    public Response updateCustomer(@PathParam("customerId") long customerId, Map<String, Object> requestBody) throws SQLException {
+        Customer customerToUpdate = validateRequestBodyData(requestBody);
+        customerToUpdate.setId(customerId);
+
+        customerService.updateCustomer(customerToUpdate);
+
+        return Response.ok(JsonConverter.convert(customerToUpdate)).build();
+    }
+
+    private Customer validateRequestBodyData(Map<String, Object> requestBody) {
+        String customerName = (String) requestBody.get("name");
+        String customerLastname = (String) requestBody.get("lastname");
 
         if (StringUtils.isEmpty(customerName) || StringUtils.isEmpty(customerLastname)) {
             throw new BadRequestException("Can not create new customer without name or lastname");
         }
 
-        Customer newCustomer = new Customer(customerName, customerLastname);
-        newCustomer = customerService.createCustomer(newCustomer);
-
-        return Response.ok(JsonConverter.convert(newCustomer)).build();
+        return new Customer(customerName, customerLastname);
     }
 }
