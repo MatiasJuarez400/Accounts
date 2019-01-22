@@ -21,6 +21,10 @@ public class CustomerAccount {
 
     private CustomerAccount() {}
 
+    public CustomerAccount(Long id) {
+        this.id = id;
+    }
+
     public CustomerAccount(Customer customer, Country baseCountry) {
         this.customer = customer;
         this.baseCountry = baseCountry;

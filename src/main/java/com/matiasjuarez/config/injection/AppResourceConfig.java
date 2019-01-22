@@ -5,6 +5,7 @@ import com.matiasjuarez.api.currency.CurrencyResource;
 import com.matiasjuarez.api.customer.CustomerResource;
 import com.matiasjuarez.api.customeraccount.CustomerAccountResource;
 import com.matiasjuarez.api.errorhandling.*;
+import com.matiasjuarez.api.monetaryaccount.MonetaryAccountResource;
 import org.glassfish.jersey.server.ResourceConfig;
 
 public class AppResourceConfig extends ResourceConfig {
@@ -20,6 +21,7 @@ public class AppResourceConfig extends ResourceConfig {
         register(CustomerResource.class);
         register(CountryResource.class);
         register(CustomerAccountResource.class);
+        register(MonetaryAccountResource.class);
     }
 
     private void registerExceptionMappers() {

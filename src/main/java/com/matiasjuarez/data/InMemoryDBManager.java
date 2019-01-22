@@ -51,7 +51,7 @@ public class InMemoryDBManager {
         ConnectionSource connectionSource = getConnectionSource();
         for (Class clazz : persistedClasses) {
             try {
-                Dao newDao = DaoManager.createDao(connectionSource, clazz);
+                Dao newDao = (Dao) DaoManager.createDao(connectionSource, clazz);
                 DAOs.put(clazz.getName(), newDao);
                 TableUtils.createTable(newDao);
             } catch (SQLException e) {

@@ -16,7 +16,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-@Path("/customeraccounts")
+import static com.matiasjuarez.api.customeraccount.CustomerAccountResource.CUSTOMER_ACCOUNTS_PATH;
+
+@Path(CUSTOMER_ACCOUNTS_PATH)
 @Produces(MediaType.APPLICATION_JSON)
 public class CustomerAccountResource {
 
@@ -25,6 +27,8 @@ public class CustomerAccountResource {
 
     private static final String COUNTRY_CODE = "countryCode";
     private static final String CUSTOMER_ID = "customerId";
+
+    public static final String CUSTOMER_ACCOUNTS_PATH = "/customeraccounts";
 
     public CustomerAccountResource(CustomerAccountService customerAccountService) {
         this.customerAccountService = customerAccountService;

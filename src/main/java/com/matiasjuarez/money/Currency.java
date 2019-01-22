@@ -12,7 +12,11 @@ public class Currency {
     @DatabaseField
     private String name;
 
-    private Currency() {}
+    public Currency() {}
+
+    public Currency(String ticker) {
+        this.ticker = ticker;
+    }
 
     public Currency(String ticker, String name) {
         this.ticker = ticker;

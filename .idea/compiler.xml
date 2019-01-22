@@ -9,5 +9,8 @@
         <module name="accounts" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="accounts" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

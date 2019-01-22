@@ -17,19 +17,19 @@ import java.util.Objects;
 @DatabaseTable(tableName = "monetary_accounts")
 public class MonetaryAccount {
     @DatabaseField(generatedId = true)
-    private long id;
+    private Long id;
     @DatabaseField
     private BigDecimal funds;
-    @DatabaseField(foreign = true, foreignAutoCreate = true)
+    @DatabaseField(foreign = true, foreignAutoCreate = true, foreignAutoRefresh = true)
     private Currency accountCurrency;
     @DatabaseField
     private MonetaryAccountStatus accountStatus;
     @ForeignCollectionField(foreignFieldName = "originAccount")
     private Collection<Transaction> transactions;
-    @DatabaseField(foreign = true)
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private CustomerAccount customerAccount;
 
-    private MonetaryAccount() {}
+    public MonetaryAccount() {}
 
     public MonetaryAccount(Currency accountCurrency, CustomerAccount customerAccount, MonetaryAccountStatus initialStatus) {
         this.accountCurrency = accountCurrency;
@@ -55,32 +55,28 @@ public class MonetaryAccount {
         return this.accountStatus == MonetaryAccountStatus.OPERATIVE;
     }
 
-    public void freeze() {
-        this.accountStatus = MonetaryAccountStatus.FROZEN;
+    public void setAccountStatus(MonetaryAccountStatus accountStatus) {
+        this.accountStatus = accountStatus;
     }
 
-    public void deactivate() {
-        this.accountStatus = MonetaryAccountStatus.INACTIVE;
+    public MonetaryAccountStatus getAccountStatus() {
+        return accountStatus;
     }
 
-    public void activate() {
-        this.accountStatus = MonetaryAccountStatus.OPERATIVE;
+    public void changeStatus(boolean isActive) {
+        this.accountStatus = isActive ? MonetaryAccountStatus.OPERATIVE : MonetaryAccountStatus.INACTIVE;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
     public Money getFunds() {
         return new Money(this.funds, this.accountCurrency);
-    }
-
-    public MonetaryAccountStatus getAccountStatus() {
-        return accountStatus;
     }
 
     public List<Transaction> getTransactions() {
