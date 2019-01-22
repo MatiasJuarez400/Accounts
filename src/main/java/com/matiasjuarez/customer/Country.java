@@ -6,7 +6,7 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "countries")
 public class Country {
     @DatabaseField(generatedId = true)
-    private long id;
+    private Long id;
     @DatabaseField
     private String code;
     @DatabaseField
@@ -25,5 +25,13 @@ public class Country {
 
     public String getName() {
         return name;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

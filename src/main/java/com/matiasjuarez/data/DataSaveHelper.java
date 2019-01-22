@@ -1,6 +1,5 @@
 package com.matiasjuarez.data;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.j256.ormlite.dao.Dao;
 import com.matiasjuarez.customer.CustomerAccount;
 import com.matiasjuarez.monetaryaccount.MonetaryAccount;

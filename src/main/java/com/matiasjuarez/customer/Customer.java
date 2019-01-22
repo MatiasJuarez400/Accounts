@@ -6,7 +6,7 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "customers")
 public class Customer {
     @DatabaseField(generatedId = true)
-    private long id;
+    private Long id;
     @DatabaseField
     private String name;
     @DatabaseField
@@ -27,11 +27,11 @@ public class Customer {
         return lastname;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 }

@@ -12,7 +12,7 @@ import java.util.List;
 @DatabaseTable(tableName = "customer_accounts")
 public class CustomerAccount {
     @DatabaseField(generatedId = true)
-    private long id;
+    private Long id;
     @DatabaseField(foreign = true, foreignAutoCreate = true)
     private Customer customer;
     @ForeignCollectionField
@@ -32,20 +32,28 @@ public class CustomerAccount {
         return customer;
     }
 
-    public List<MonetaryAccount> getMonetaryAccounts() {
-        return (ArrayList) monetaryAccounts;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public Country getBaseCountry() {
         return baseCountry;
     }
 
-    public long getId() {
-        return id;
+    public void setBaseCountry(Country baseCountry) {
+        this.baseCountry = baseCountry;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public Collection<MonetaryAccount> getMonetaryAccounts() {
+        return monetaryAccounts;
     }
 
     public void addMonetaryAccount(MonetaryAccount monetaryAccount) {

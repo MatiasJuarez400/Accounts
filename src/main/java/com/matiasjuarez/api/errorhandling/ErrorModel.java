@@ -1,6 +1,7 @@
 package com.matiasjuarez.api.errorhandling;
 
 import com.matiasjuarez.api.errorhandling.exceptions.EntityNotFoundException;
+import com.matiasjuarez.api.errorhandling.exceptions.InconsistentDataException;
 import com.matiasjuarez.api.errorhandling.exceptions.UpdateNotPerformedException;
 import com.matiasjuarez.utils.JsonConverter;
 
@@ -40,6 +41,12 @@ public class ErrorModel {
         this.errorCode = 5;
         this.errorDescription = "Update not performed";
         this.errorMessage = updateNotPerformedException.getMessage();
+    }
+
+    public ErrorModel(InconsistentDataException inconsistentDataException) {
+        this.errorCode = 6;
+        this.errorDescription = "Inconsistent data";
+        this.errorMessage = inconsistentDataException.getMessage();
     }
 
     public String toJson() {
