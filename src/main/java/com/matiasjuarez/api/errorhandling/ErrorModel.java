@@ -1,0 +1,60 @@
+package com.matiasjuarez.api.errorhandling;
+
+import com.matiasjuarez.api.errorhandling.exceptions.EntityNotFoundException;
+import com.matiasjuarez.api.errorhandling.exceptions.UpdateNotPerformedException;
+import com.matiasjuarez.utils.JsonConverter;
+
+import javax.ws.rs.BadRequestException;
+import java.sql.SQLException;
+
+public class ErrorModel {
+    private int errorCode;
+    private String errorDescription;
+    private String errorMessage;
+
+    public ErrorModel(SQLException sqlException) {
+        this.errorCode = 1;
+        this.errorDescription = "Database problem";
+        this.errorMessage = sqlException.getMessage();
+    }
+
+    public ErrorModel(RuntimeException runtimeException) {
+        this.errorCode = 2;
+        this.errorDescription = "General problem";
+        this.errorMessage = runtimeException.getMessage();
+    }
+
+    public ErrorModel(EntityNotFoundException entityNotFoundException) {
+        this.errorCode = 3;
+        this.errorDescription = "Entity not found";
+        this.errorMessage = entityNotFoundException.getMessage();
+    }
+
+    public ErrorModel(BadRequestException badRequestException) {
+        this.errorCode = 4;
+        this.errorDescription = "Bad Request";
+        this.errorMessage = badRequestException.getMessage();
+    }
+
+    public ErrorModel(UpdateNotPerformedException updateNotPerformedException) {
+        this.errorCode = 5;
+        this.errorDescription = "Update not performed";
+        this.errorMessage = updateNotPerformedException.getMessage();
+    }
+
+    public String toJson() {
+        return JsonConverter.convert(this);
+    }
+
+    public int getErrorCode() {
+        return errorCode;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public String getErrorDescription() {
+        return errorDescription;
+    }
+}

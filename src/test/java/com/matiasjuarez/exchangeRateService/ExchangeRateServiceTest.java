@@ -1,6 +1,6 @@
-package com.matiasjuarez.api;
+package com.matiasjuarez.exchangeRateService;
 
-import com.matiasjuarez.api.exception.InvalidCurrencyPairException;
+import com.matiasjuarez.exchangeRateService.exception.InvalidCurrencyPairException;
 import com.matiasjuarez.money.ExchangeRate;
 import org.junit.Before;
 import org.junit.Test;

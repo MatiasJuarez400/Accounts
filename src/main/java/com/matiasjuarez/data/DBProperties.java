@@ -1,7 +1,7 @@
 package com.matiasjuarez.data;
 
-import java.io.IOException;
-import java.io.InputStream;
+import com.matiasjuarez.utils.PropertyFilesReader;
+
 import java.util.Properties;
 
 public class DBProperties {
@@ -10,20 +10,12 @@ public class DBProperties {
     private String password;
     private String driverClassName;
 
-    private static final String PROPERTIES_SOURCE = "h2.properties";
+    private static final String PROPERTIES_SOURCE = "config/h2.properties";
 
     private static DBProperties instance;
 
     private DBProperties() {
-        Properties properties = new Properties();
-
-        try(final InputStream stream = this.getClass().getClassLoader().
-                getResourceAsStream(PROPERTIES_SOURCE)) {
-
-            properties.load(stream);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        Properties properties = PropertyFilesReader.getInstance().getH2Properties();
 
         this.dbURL = properties.getProperty("url");
         this.username = properties.getProperty("username");

@@ -1,16 +1,19 @@
 package com.matiasjuarez;
 
-import com.matiasjuarez.data.InMemoryDBManager;
+import com.matiasjuarez.config.server.ServerLauncher;
+import com.matiasjuarez.data.FakeDataLoader;
 
 /**
  * Hello world!
  *
  */
-public class App 
+public class App
 {
-    public static void main( String[] args ) throws InterruptedException {
-        InMemoryDBManager inMemoryDBManager = InMemoryDBManager.getInstance();
+    public static void main( String[] args ) throws Exception {
+        FakeDataLoader fakeDataLoader = new FakeDataLoader();
+        fakeDataLoader.loadData();
 
-        Thread.sleep(9999999);
+        ServerLauncher serverLauncher = new ServerLauncher();
+        serverLauncher.launch();
     }
 }

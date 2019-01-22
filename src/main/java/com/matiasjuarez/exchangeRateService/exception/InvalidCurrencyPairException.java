@@ -1,4 +1,4 @@
-package com.matiasjuarez.api.exception;
+package com.matiasjuarez.exchangeRateService.exception;
 
 public class InvalidCurrencyPairException extends IllegalArgumentException {
     public InvalidCurrencyPairException(String currencyPair) {
