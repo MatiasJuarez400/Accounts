@@ -2,7 +2,6 @@ package com.matiasjuarez.model.monetaryaccount.transaction.feecalculators;
 
 import com.matiasjuarez.model.monetaryaccount.MonetaryAccount;
 
-import javax.inject.Inject;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +12,6 @@ import java.util.List;
 public class BasicFeeCalculatorStrategy implements FeeCalculatorStrategy {
     private List<FeeCalculatorStrategy> feeCalculatorStrategies;
 
-    @Inject
     public BasicFeeCalculatorStrategy(InternationalFeeCalculatorStrategy internationalFeeCalculatorStrategy,
                                       CurrencyConversionFeeCalcultorStrategy currencyConversionFeeCalcultorStrategy) {
         this.feeCalculatorStrategies = new ArrayList<>();

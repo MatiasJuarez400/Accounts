@@ -5,22 +5,17 @@ import com.matiasjuarez.model.monetaryaccount.transaction.feecalculators.FeeCalc
 import com.matiasjuarez.model.money.Money;
 import com.matiasjuarez.model.money.MoneyConverter;
 
-import javax.inject.Inject;
 import java.math.BigDecimal;
 import java.util.Date;
 
 public class TransactionHandler {
-    @Inject
     private FeeCalculatorStrategy feeCalculatorStrategy;
-    @Inject
     private MoneyConverter moneyConverter;
 
     public TransactionHandler(FeeCalculatorStrategy feeCalculatorStrategy, MoneyConverter moneyConverter) {
         this.feeCalculatorStrategy = feeCalculatorStrategy;
         this.moneyConverter = moneyConverter;
     }
-
-    public TransactionHandler() {}
 
     public boolean canExecuteTransaction(MonetaryAccount origin, MonetaryAccount target, BigDecimal amountToTransfer) {
         TransactionError transactionError = getTransactionError(origin, target, amountToTransfer);

@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.Response;
+import java.math.BigDecimal;
 import java.util.Map;
 
 public class ApiUtils {
@@ -19,9 +20,9 @@ public class ApiUtils {
         }
     }
 
-    public static Double convertRequestValueToDouble(String requestBodyKey, Object requestBodyValue) {
+    public static BigDecimal convertRequestValueToBigDecimal(String requestBodyKey, Object requestBodyValue) {
         try {
-            return (Double) requestBodyValue;
+            return new BigDecimal((String) requestBodyValue);
         } catch (Exception e) {
             throw new BadRequestException(
                     String.format("Value for %s must be a floating-point number. Received [%s]",

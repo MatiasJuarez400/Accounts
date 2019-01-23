@@ -12,10 +12,8 @@ import com.matiasjuarez.api.monetaryaccount.MonetaryAccountService;
 import com.matiasjuarez.api.monetaryaccount.MonetaryAccountServiceImpl;
 import com.matiasjuarez.api.transaction.TransactionService;
 import com.matiasjuarez.api.transaction.TransactionServiceImpl;
-import com.matiasjuarez.model.monetaryaccount.transaction.feecalculators.BasicFeeCalculatorStrategy;
-import com.matiasjuarez.model.monetaryaccount.transaction.feecalculators.FeeCalculatorStrategy;
-import com.matiasjuarez.model.money.exchangeRate.ExchangeRateService;
-import com.matiasjuarez.model.money.exchangeRate.StoredExchangeRateService;
+import com.matiasjuarez.api.transactionerror.TransactionErrorService;
+import com.matiasjuarez.api.transactionerror.TransactionErrorServiceImpl;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 
 public class AppBinder extends AbstractBinder {
@@ -28,7 +26,6 @@ public class AppBinder extends AbstractBinder {
         bind(CustomerAccountServiceImpl.class).to(CustomerAccountService.class);
         bind(MonetaryAccountServiceImpl.class).to(MonetaryAccountService.class);
         bind(TransactionServiceImpl.class).to(TransactionService.class);
-        bind(StoredExchangeRateService.class).to(ExchangeRateService.class);
-        bind(BasicFeeCalculatorStrategy.class).to(FeeCalculatorStrategy.class);
+        bind(TransactionErrorServiceImpl.class).to(TransactionErrorService.class);
     }
 }

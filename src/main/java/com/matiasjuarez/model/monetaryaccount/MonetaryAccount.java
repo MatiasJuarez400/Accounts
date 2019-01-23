@@ -1,5 +1,6 @@
 package com.matiasjuarez.model.monetaryaccount;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
@@ -23,6 +24,7 @@ public class MonetaryAccount {
     @DatabaseField
     private MonetaryAccountStatus accountStatus;
     @ForeignCollectionField
+    @JsonIgnore
     private Collection<Transaction> transactions;
     @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private CustomerAccount customerAccount;

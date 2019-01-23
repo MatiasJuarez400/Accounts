@@ -3,13 +3,11 @@ package com.matiasjuarez.model.money;
 import com.matiasjuarez.model.money.exchangeRate.ExchangeRate;
 import com.matiasjuarez.model.money.exchangeRate.ExchangeRateService;
 
-import javax.inject.Inject;
 import java.math.BigDecimal;
 
 public class MoneyConverter {
     private ExchangeRateService exchangeRateService;
 
-    @Inject
     public MoneyConverter(ExchangeRateService exchangeRateService) {
         this.exchangeRateService = exchangeRateService;
     }

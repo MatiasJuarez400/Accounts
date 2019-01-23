@@ -10,6 +10,7 @@ import com.matiasjuarez.model.customer.Customer;
 import com.matiasjuarez.model.customer.CustomerAccount;
 import com.matiasjuarez.model.monetaryaccount.MonetaryAccount;
 import com.matiasjuarez.model.monetaryaccount.transaction.Transaction;
+import com.matiasjuarez.model.monetaryaccount.transaction.TransactionError;
 import com.matiasjuarez.model.money.Currency;
 
 import java.sql.SQLException;
@@ -45,7 +46,8 @@ public class InMemoryDBManager {
                 Customer.class,
                 CustomerAccount.class,
                 MonetaryAccount.class,
-                Transaction.class
+                Transaction.class,
+                TransactionError.class
         };
 
         ConnectionSource connectionSource = getConnectionSource();

@@ -14,9 +14,9 @@ import java.util.Date;
 public class TransactionError {
     @DatabaseField(generatedId = true)
     private Long id;
-    @DatabaseField(foreign = true)
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private MonetaryAccount origin;
-    @DatabaseField(foreign = true)
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private MonetaryAccount target;
     @DatabaseField
     private BigDecimal amountToTransfer;
