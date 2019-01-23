@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface TransactionErrorService {
     List<TransactionError> getMonetaryAccountTransactionErrors(Long monetaryAccountId) throws SQLException;
+    List<TransactionError> getCustomerAccountTransactionErrors(Long customerAccountId) throws SQLException;
     TransactionError createTransactionError(TransactionError transactionError) throws SQLException;
 }

@@ -20,7 +20,7 @@ public class ExchangeRate {
 
     public void setRate(BigDecimal rate) {
         this.rate = rate;
-        this.invertedRate = BigDecimal.ONE.divide(this.rate);
+        this.invertedRate = BigDecimal.ONE.divide(this.rate, 2, BigDecimal.ROUND_HALF_UP);
     }
 
     public String getTickerOrigin() {

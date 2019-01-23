@@ -3,53 +3,97 @@ package com.matiasjuarez.model.monetaryaccount.transaction;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.matiasjuarez.model.monetaryaccount.MonetaryAccount;
-import com.matiasjuarez.model.money.Currency;
 import com.matiasjuarez.model.money.Money;
+import com.matiasjuarez.utils.DateFormatter;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 @DatabaseTable(tableName = "transactions")
 public class Transaction {
     @DatabaseField(generatedId = true)
     private Long id;
-    @DatabaseField(foreign = true)
-    private MonetaryAccount originAccount;
-    @DatabaseField(foreign = true)
-    private MonetaryAccount targetAccount;
+
     @DatabaseField
-    private BigDecimal initialAmount;
-    @DatabaseField(foreign = true)
-    private Currency initialCurrency;
+    private String originMonetaryAccountId;
     @DatabaseField
-    private BigDecimal feesAmount;
-    @DatabaseField(foreign = true)
-    private Currency feesCurrency;
+    private String originFundsBeforeTransaction;
     @DatabaseField
-    private BigDecimal effectiveAmount;
-    @DatabaseField(foreign = true)
-    private Currency effectiveCurrency;
+    private String originCurrency;
+    @DatabaseField
+    private String originStatus;
+    @DatabaseField
+    private String originCustomerAccountId;
+    @DatabaseField
+    private String originCustomerAccountCountry;
+
+    @DatabaseField
+    private String targetMonetaryAccountId;
+    @DatabaseField
+    private String targetFundsBeforeTransaction;
+    @DatabaseField
+    private String targetCurrency;
+    @DatabaseField
+    private String targetStatus;
+    @DatabaseField
+    private String targetCustomerAccountId;
+    @DatabaseField
+    private String targetCustomerAccountCountry;
+
+    @DatabaseField
+    private String transferAmount;
+    @DatabaseField
+    private String transferAmountCurrency;
+
+    @DatabaseField
+    private String feeAmount;
+    @DatabaseField
+    private String feeAmountCurrency;
+
+    @DatabaseField
+    private String effectiveAmount;
+    @DatabaseField
+    private String effectiveAmountCurrency;
+
     @DatabaseField
     private Date executionDate;
+    @DatabaseField
+    private String formatedDate;
+
+    @DatabaseField(foreign = true)
+    private MonetaryAccount monetaryAccount;
 
     public Transaction() {}
 
     public Transaction(MonetaryAccount origin, MonetaryAccount target,
-                       Money initialTransactionAmount, Money feesAmount, Money effectiveTransactionAmount,
+                       Money transferAmount, Money feeAmount, Money effectiveAmount,
                        Date executionDate) {
-        this.originAccount = origin;
-        this.targetAccount = target;
+        this.originMonetaryAccountId = origin.getId().toString();
+        this.originFundsBeforeTransaction = origin.getFunds().toString();
+        this.originCurrency = origin.getAccountCurrency().getTicker();
+        this.originStatus = origin.getAccountStatus().toString();
+        this.originCustomerAccountId = origin.getCustomerAccount().getId().toString();
+        this.originCustomerAccountCountry = origin.getCustomerAccount().getBaseCountry().getCode();
 
-        this.initialAmount = initialTransactionAmount.getAmount();
-        this.initialCurrency = initialTransactionAmount.getCurrency();
+        this.targetMonetaryAccountId = target.getId().toString();
+        this.targetFundsBeforeTransaction = target.getFunds().toString();
+        this.targetCurrency = target.getAccountCurrency().getTicker();
+        this.targetStatus = target.getAccountStatus().toString();
+        this.targetCustomerAccountId = target.getCustomerAccount().getId().toString();
+        this.targetCustomerAccountCountry = target.getCustomerAccount().getBaseCountry().getCode();
 
-        this.feesAmount = feesAmount.getAmount();
-        this.feesCurrency = feesAmount.getCurrency();
+        this.transferAmount = transferAmount.getAmount().toString();
+        this.transferAmountCurrency = transferAmount.getCurrency().getTicker();
 
-        this.effectiveAmount = effectiveTransactionAmount.getAmount();
-        this.effectiveCurrency = effectiveTransactionAmount.getCurrency();
+        this.feeAmount = feeAmount.getAmount().toString();
+        this.feeAmountCurrency = feeAmount.getCurrency().getTicker();
+
+        this.effectiveAmount = effectiveAmount.getAmount().toString();
+        this.effectiveAmountCurrency = effectiveAmount.getCurrency().getTicker();
 
         this.executionDate = executionDate;
+        this.formatedDate = DateFormatter.format(executionDate);
+
+        this.monetaryAccount = origin;
     }
 
     public long getId() {
@@ -60,39 +104,83 @@ public class Transaction {
         this.id = id;
     }
 
-    public MonetaryAccount getOriginAccount() {
-        return originAccount;
+    public String getOriginMonetaryAccountId() {
+        return originMonetaryAccountId;
     }
 
-    public MonetaryAccount getTargetAccount() {
-        return targetAccount;
+    public String getOriginFundsBeforeTransaction() {
+        return originFundsBeforeTransaction;
     }
 
-    public BigDecimal getInitialAmount() {
-        return initialAmount;
+    public String getOriginCurrency() {
+        return originCurrency;
     }
 
-    public Currency getInitialCurrency() {
-        return initialCurrency;
+    public String getOriginStatus() {
+        return originStatus;
     }
 
-    public BigDecimal getFeesAmount() {
-        return feesAmount;
+    public String getOriginCustomerAccountId() {
+        return originCustomerAccountId;
     }
 
-    public Currency getFeesCurrency() {
-        return feesCurrency;
+    public String getOriginCustomerAccountCountry() {
+        return originCustomerAccountCountry;
     }
 
-    public BigDecimal getEffectiveAmount() {
+    public String getTargetMonetaryAccountId() {
+        return targetMonetaryAccountId;
+    }
+
+    public String getTargetFundsBeforeTransaction() {
+        return targetFundsBeforeTransaction;
+    }
+
+    public String getTargetCurrency() {
+        return targetCurrency;
+    }
+
+    public String getTargetStatus() {
+        return targetStatus;
+    }
+
+    public String getTargetCustomerAccountId() {
+        return targetCustomerAccountId;
+    }
+
+    public String getTargetCustomerAccountCountry() {
+        return targetCustomerAccountCountry;
+    }
+
+    public String getTransferAmount() {
+        return transferAmount;
+    }
+
+    public String getTransferAmountCurrency() {
+        return transferAmountCurrency;
+    }
+
+    public String getFeeAmount() {
+        return feeAmount;
+    }
+
+    public String getFeeAmountCurrency() {
+        return feeAmountCurrency;
+    }
+
+    public String getEffectiveAmount() {
         return effectiveAmount;
     }
 
-    public Currency getEffectiveCurrency() {
-        return effectiveCurrency;
+    public String getEffectiveAmountCurrency() {
+        return effectiveAmountCurrency;
     }
 
     public Date getExecutionDate() {
         return executionDate;
+    }
+
+    public String getFormatedDate() {
+        return formatedDate;
     }
 }

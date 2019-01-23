@@ -2,6 +2,7 @@ package com.matiasjuarez.model.money;
 
 import com.matiasjuarez.model.money.exchangeRate.ExchangeRate;
 import com.matiasjuarez.model.money.exchangeRate.ExchangeRateService;
+import com.matiasjuarez.utils.DecimalRounder;
 
 import java.math.BigDecimal;
 
@@ -20,6 +21,6 @@ public class MoneyConverter {
 
         BigDecimal convertedMoneyValue = money.getAmount().multiply(rate);
 
-        return new Money(convertedMoneyValue, targetCurrency);
+        return new Money(DecimalRounder.round(convertedMoneyValue), targetCurrency);
     }
 }

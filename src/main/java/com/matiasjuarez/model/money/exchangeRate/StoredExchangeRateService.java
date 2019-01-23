@@ -22,6 +22,10 @@ public class StoredExchangeRateService implements ExchangeRateService {
             }
         }
 
+        if (tickerOrigin.equalsIgnoreCase(tickerTarget)) {
+            return buildSameCurrencyExchangeRate(tickerOrigin);
+        }
+
         ExchangeRate exchangeRateToUse = null;
         for (ExchangeRate exchangeRate : exchangeRates) {
             if ((exchangeRate.getTickerOrigin().equalsIgnoreCase(tickerOrigin) &&
@@ -30,6 +34,7 @@ public class StoredExchangeRateService implements ExchangeRateService {
                     exchangeRate.getTickerTarget().equalsIgnoreCase(tickerOrigin))
             ) {
                 exchangeRateToUse = exchangeRate;
+                break;
             }
         }
 
@@ -40,6 +45,10 @@ public class StoredExchangeRateService implements ExchangeRateService {
         }
 
         return exchangeRateToUse;
+    }
+
+    private ExchangeRate buildSameCurrencyExchangeRate(String ticker) {
+        return new ExchangeRate(ticker, ticker, BigDecimal.ONE);
     }
 
     private void loadExchangeRates() throws Exception {

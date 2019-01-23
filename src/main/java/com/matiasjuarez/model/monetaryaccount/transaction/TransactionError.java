@@ -3,6 +3,7 @@ package com.matiasjuarez.model.monetaryaccount.transaction;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.matiasjuarez.model.monetaryaccount.MonetaryAccount;
+import com.matiasjuarez.utils.DateFormatter;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
@@ -52,7 +53,6 @@ public class TransactionError {
     @DatabaseField
     private String error;
 
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     public TransactionError(MonetaryAccount origin, MonetaryAccount target, BigDecimal amountToTransfer, Date executionDate, String error) {
         this.originId = origin.getId().toString();
         this.originFunds = origin.getFunds().toString();
@@ -70,7 +70,7 @@ public class TransactionError {
 
         this.amountToTransfer = amountToTransfer;
         this.executionDate = executionDate;
-        this.formattedDate = sdf.format(executionDate);
+        this.formattedDate = DateFormatter.format(executionDate);
         this.error = error;
     }
 

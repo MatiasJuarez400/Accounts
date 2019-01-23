@@ -7,11 +7,11 @@
   {
     "tickerOrigin": "USD",
     "tickerTarget": "ARS",
-    "rate": "37"
+    "rate": "37.0"
   },
   {
     "tickerOrigin": "GBP",
     "tickerTarget": "ARS",
-    "rate": "48"
+    "rate": "48.0"
   }
 ]

@@ -4,6 +4,7 @@ import com.matiasjuarez.model.monetaryaccount.MonetaryAccount;
 import com.matiasjuarez.model.monetaryaccount.transaction.feecalculators.FeeCalculatorStrategy;
 import com.matiasjuarez.model.money.Money;
 import com.matiasjuarez.model.money.MoneyConverter;
+import com.matiasjuarez.utils.DecimalRounder;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -46,8 +47,8 @@ public class TransactionHandler {
         BigDecimal feeToApply = feeCalculatorStrategy.calculate(origin, target, amountToTransfer);
         BigDecimal effectiveAmount = amountToTransfer.subtract(feeToApply);
 
-        Money initialAmountMoney = new Money(amountToTransfer, origin.getAccountCurrency());
-        Money feesMoney = new Money(feeToApply, origin.getAccountCurrency());
+        Money initialAmountMoney = new Money(DecimalRounder.round(amountToTransfer), origin.getAccountCurrency());
+        Money feesMoney = new Money(DecimalRounder.round(feeToApply), origin.getAccountCurrency());
         Money effectiveAmountMoney = new Money(effectiveAmount, origin.getAccountCurrency());
         Money convertedEffectiveAmountMoney = moneyConverter.convertMoney(effectiveAmountMoney, target.getAccountCurrency());
 

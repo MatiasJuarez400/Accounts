@@ -10,13 +10,16 @@ import com.matiasjuarez.api.errorhandling.exceptions.IllegalUpdateException;
 import com.matiasjuarez.api.errorhandling.exceptions.UpdateNotPerformedException;
 import com.matiasjuarez.model.customer.CustomerAccount;
 import com.matiasjuarez.model.monetaryaccount.MonetaryAccount;
+import com.matiasjuarez.model.monetaryaccount.transaction.Transaction;
 import com.matiasjuarez.model.money.Currency;
 
 import javax.inject.Inject;
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 public class MonetaryAccountServiceImpl extends BaseService implements MonetaryAccountService {
     @Inject
@@ -118,6 +121,27 @@ public class MonetaryAccountServiceImpl extends BaseService implements MonetaryA
         retrievedMonetaryAccount.setCustomerAccount(customerAccountService.getCustomerAccount(retrievedMonetaryAccount.getCustomerAccount().getId()));
 
         return retrievedMonetaryAccount;
+    }
+
+    @Override
+    public void processTransaction(Transaction transaction) throws Exception {
+        MonetaryAccount origin = getDao().queryForId(Long.valueOf(transaction.getOriginMonetaryAccountId()));
+        MonetaryAccount target = getDao().queryForId(Long.valueOf(transaction.getTargetMonetaryAccountId()));
+
+        origin.setFunds(origin.getFunds().subtract(new BigDecimal(transaction.getTransferAmount())));
+        target.setFunds(target.getFunds().add(new BigDecimal(transaction.getEffectiveAmount())));
+
+        // Execute updates inside a single transaction
+        Dao<MonetaryAccount, Long> monetaryAccountDao = getDao();
+        monetaryAccountDao.callBatchTasks(new Callable<Object>() {
+            @Override
+            public Object call() throws Exception {
+                monetaryAccountDao.update(origin);
+                monetaryAccountDao.update(target);
+
+                return true;
+            }
+        });
     }
 
     private Dao<MonetaryAccount, Long> getDao() {
