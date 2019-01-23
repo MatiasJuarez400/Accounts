@@ -1,7 +1,8 @@
 package com.matiasjuarez.api.customer;
 
+import com.matiasjuarez.api.ApiUtils;
 import com.matiasjuarez.api.errorhandling.exceptions.EntityNotFoundException;
-import com.matiasjuarez.customer.Customer;
+import com.matiasjuarez.model.customer.Customer;
 import com.matiasjuarez.utils.JsonConverter;
 import org.apache.commons.lang3.StringUtils;
 
@@ -34,18 +35,18 @@ public class CustomerResource {
             throw new EntityNotFoundException(customerId);
         }
 
-        return Response.ok(JsonConverter.convert(customer)).build();
+        return ApiUtils.buildOkResponse(customer);
     }
 
-    @PUT
+    @POST
     public Response createCustomer(Map<String, Object> request) throws SQLException {
         Customer newCustomer = validateRequestBodyData(request);
         newCustomer = customerService.createCustomer(newCustomer);
 
-        return Response.ok(JsonConverter.convert(newCustomer)).build();
+        return ApiUtils.buildCreatedResponse(newCustomer);
     }
 
-    @POST
+    @PUT
     @Path("/{customerId}{format: (\\d+)?}")
     public Response updateCustomer(@PathParam("customerId") long customerId, Map<String, Object> requestBody) throws SQLException {
         Customer customerToUpdate = validateRequestBodyData(requestBody);
@@ -53,7 +54,7 @@ public class CustomerResource {
 
         customerService.updateCustomer(customerToUpdate);
 
-        return Response.ok(JsonConverter.convert(customerToUpdate)).build();
+        return ApiUtils.buildOkResponse(customerToUpdate);
     }
 
     private Customer validateRequestBodyData(Map<String, Object> requestBody) {

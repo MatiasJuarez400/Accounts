@@ -1,21 +1,15 @@
 package com.matiasjuarez.api.currency;
 
 import com.j256.ormlite.dao.Dao;
-import com.matiasjuarez.data.InMemoryDBManager;
-import com.matiasjuarez.money.Currency;
+import com.matiasjuarez.api.BaseService;
+import com.matiasjuarez.model.money.Currency;
 
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CurrencyServiceImpl implements CurrencyService{
-    private InMemoryDBManager inMemoryDBManager;
-
-    public CurrencyServiceImpl() {
-        this.inMemoryDBManager = InMemoryDBManager.getInstance();
-    }
-
+public class CurrencyServiceImpl extends BaseService implements CurrencyService {
     public List<Currency> getCurrencies() throws SQLException {
         Dao<Currency, Long> currencyDao = inMemoryDBManager.getDaoForClass(Currency.class);
         return currencyDao.queryForAll();

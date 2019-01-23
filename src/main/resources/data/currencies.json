@@ -1,9 +1,5 @@
 [
   {
-    "ticker":"ARS",
-    "name":"Argentine Peso"
-  },
-  {
     "ticker":"USD",
     "name":"United States Dollar"
   },
@@ -12,7 +8,7 @@
     "name":"British Pound"
   },
   {
-    "ticker":"EUR",
-    "name":"Euro"
+    "ticker":"ARS",
+    "name":"Argentine Peso"
   }
 ]

@@ -1,0 +1,28 @@
+[
+  {
+    "id": 1,
+    "customer": {
+      "id": 2,
+      "name": "Rafaela",
+      "lastname": "Simpson"
+    },
+    "monetaryAccounts": [],
+    "baseCountry": {
+      "code": "AR",
+      "name": "Argentina"
+    }
+  },
+  {
+    "id": 2,
+    "customer": {
+      "id": 1,
+      "name": "Matias",
+      "lastname": "Juarez"
+    },
+    "monetaryAccounts": [],
+    "baseCountry": {
+      "code": "GB",
+      "name": "United Kingdom"
+    }
+  }
+]

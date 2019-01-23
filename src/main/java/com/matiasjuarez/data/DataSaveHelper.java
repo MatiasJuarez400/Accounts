@@ -1,10 +1,9 @@
 package com.matiasjuarez.data;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.j256.ormlite.dao.Dao;
-import com.matiasjuarez.customer.CustomerAccount;
-import com.matiasjuarez.monetaryaccount.MonetaryAccount;
-import com.matiasjuarez.monetaryaccount.transaction.Transaction;
+import com.matiasjuarez.model.customer.CustomerAccount;
+import com.matiasjuarez.model.monetaryaccount.MonetaryAccount;
+import com.matiasjuarez.model.monetaryaccount.transaction.Transaction;
 
 import java.sql.SQLException;
 

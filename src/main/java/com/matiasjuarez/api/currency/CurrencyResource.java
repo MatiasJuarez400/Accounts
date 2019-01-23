@@ -1,7 +1,8 @@
 package com.matiasjuarez.api.currency;
 
+import com.matiasjuarez.api.ApiUtils;
 import com.matiasjuarez.api.errorhandling.exceptions.EntityNotFoundException;
-import com.matiasjuarez.money.Currency;
+import com.matiasjuarez.model.money.Currency;
 import com.matiasjuarez.utils.JsonConverter;
 
 import javax.inject.Inject;
@@ -15,6 +16,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Path("/currencies")
+@Produces(MediaType.APPLICATION_JSON)
 public class CurrencyResource {
     @Inject
     private CurrencyService currencyService;
@@ -26,15 +28,13 @@ public class CurrencyResource {
     public CurrencyResource() {}
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
     public Response getCurrencies() throws SQLException {
         List<Currency> currencies = currencyService.getCurrencies();
-        return Response.ok(JsonConverter.convert(currencies)).build();
+        return ApiUtils.buildOkResponse(currencies);
     }
 
     @GET
     @Path("/{ticker}")
-    @Produces(MediaType.APPLICATION_JSON)
     public Response getCurrency(@PathParam("ticker") String ticker) throws SQLException, EntityNotFoundException {
         Currency currency = currencyService.getCurrency(ticker);
 
@@ -42,6 +42,6 @@ public class CurrencyResource {
             throw new EntityNotFoundException(ticker);
         }
 
-        return Response.ok(JsonConverter.convert(currency)).build();
+        return ApiUtils.buildOkResponse(currency);
     }
 }

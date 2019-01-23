@@ -1,24 +1,17 @@
 package com.matiasjuarez.api.customer;
 
 import com.j256.ormlite.dao.Dao;
+import com.matiasjuarez.api.BaseService;
+import com.matiasjuarez.api.EntityNames;
 import com.matiasjuarez.api.errorhandling.exceptions.EntityNotFoundException;
 import com.matiasjuarez.api.errorhandling.exceptions.UpdateNotPerformedException;
-import com.matiasjuarez.customer.Customer;
-import com.matiasjuarez.data.InMemoryDBManager;
+import com.matiasjuarez.model.customer.Customer;
 
 import java.sql.SQLException;
 
-public class CustomerServiceImpl implements CustomerService {
-    private InMemoryDBManager inMemoryDBManager;
-
-    private static final String ENTITY_NAME = "customer";
-
-    public CustomerServiceImpl() {
-        this.inMemoryDBManager = InMemoryDBManager.getInstance();
-    }
-
+public class CustomerServiceImpl extends BaseService implements CustomerService {
     @Override
-    public Customer getCustomer(long id) throws SQLException {
+    public Customer getCustomer(Long id) throws SQLException {
         return getCustomerDao().queryForId(id);
     }
 
@@ -29,17 +22,17 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer updateCustomer(Customer customer) throws SQLException, EntityNotFoundException {
+    public Customer updateCustomer(Customer customer) throws SQLException {
         Customer storedCustomer = getCustomer(customer.getId());
 
         if (storedCustomer == null) {
-            throw new EntityNotFoundException(ENTITY_NAME, customer.getId());
+            throw new EntityNotFoundException(EntityNames.CUSTOMER, customer.getId());
         }
 
         int updateResult = getCustomerDao().update(customer);
 
         if (updateResult != 1) {
-            throw new UpdateNotPerformedException(ENTITY_NAME, customer.getId());
+            throw new UpdateNotPerformedException(EntityNames.CUSTOMER, customer.getId());
         }
 
         return customer;

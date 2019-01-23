@@ -1,7 +1,6 @@
 package com.matiasjuarez.api.errorhandling;
 
-import com.matiasjuarez.api.errorhandling.exceptions.EntityNotFoundException;
-import com.matiasjuarez.api.errorhandling.exceptions.UpdateNotPerformedException;
+import com.matiasjuarez.api.errorhandling.exceptions.*;
 import com.matiasjuarez.utils.JsonConverter;
 
 import javax.ws.rs.BadRequestException;
@@ -40,6 +39,30 @@ public class ErrorModel {
         this.errorCode = 5;
         this.errorDescription = "Update not performed";
         this.errorMessage = updateNotPerformedException.getMessage();
+    }
+
+    public ErrorModel(InconsistentDataException inconsistentDataException) {
+        this.errorCode = 6;
+        this.errorDescription = "Inconsistent data";
+        this.errorMessage = inconsistentDataException.getMessage();
+    }
+
+    public ErrorModel(IllegalUpdateException illegalUpdateException) {
+        this.errorCode = 7;
+        this.errorDescription = "Illegal update";
+        this.errorMessage = illegalUpdateException.getMessage();
+    }
+
+    public ErrorModel(Exception exception) {
+        this.errorCode = 8;
+        this.errorDescription = "Unknown exception";
+        this.errorMessage = exception.getMessage();
+    }
+
+    public ErrorModel(InvalidTransactionException invalidTransactionException) {
+        this.errorCode = 9;
+        this.errorDescription = "Invalidad transaction";
+        this.errorMessage = invalidTransactionException.getMessage();
     }
 
     public String toJson() {
