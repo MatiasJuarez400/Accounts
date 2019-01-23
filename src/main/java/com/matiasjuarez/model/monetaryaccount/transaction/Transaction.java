@@ -18,6 +18,8 @@ public class Transaction {
     @DatabaseField
     private String originFundsBeforeTransaction;
     @DatabaseField
+    private String originFundsAfterTransaction;
+    @DatabaseField
     private String originCurrency;
     @DatabaseField
     private String originStatus;
@@ -30,6 +32,8 @@ public class Transaction {
     private String targetMonetaryAccountId;
     @DatabaseField
     private String targetFundsBeforeTransaction;
+    @DatabaseField
+    private String targetFundsAfterTransaction;
     @DatabaseField
     private String targetCurrency;
     @DatabaseField
@@ -69,6 +73,7 @@ public class Transaction {
                        Date executionDate) {
         this.originMonetaryAccountId = origin.getId().toString();
         this.originFundsBeforeTransaction = origin.getFunds().toString();
+        this.originFundsAfterTransaction = origin.getFunds().subtract(transferAmount.getAmount()).toString();
         this.originCurrency = origin.getAccountCurrency().getTicker();
         this.originStatus = origin.getAccountStatus().toString();
         this.originCustomerAccountId = origin.getCustomerAccount().getId().toString();
@@ -76,6 +81,7 @@ public class Transaction {
 
         this.targetMonetaryAccountId = target.getId().toString();
         this.targetFundsBeforeTransaction = target.getFunds().toString();
+        this.targetFundsAfterTransaction = target.getFunds().add(effectiveAmount.getAmount()).toString();
         this.targetCurrency = target.getAccountCurrency().getTicker();
         this.targetStatus = target.getAccountStatus().toString();
         this.targetCustomerAccountId = target.getCustomerAccount().getId().toString();
@@ -112,6 +118,10 @@ public class Transaction {
         return originFundsBeforeTransaction;
     }
 
+    public String getOriginFundsAfterTransaction() {
+        return originFundsAfterTransaction;
+    }
+
     public String getOriginCurrency() {
         return originCurrency;
     }
@@ -134,6 +144,10 @@ public class Transaction {
 
     public String getTargetFundsBeforeTransaction() {
         return targetFundsBeforeTransaction;
+    }
+
+    public String getTargetFundsAfterTransaction() {
+        return targetFundsAfterTransaction;
     }
 
     public String getTargetCurrency() {

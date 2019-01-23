@@ -6,6 +6,7 @@ import com.matiasjuarez.api.EntityNames;
 import com.matiasjuarez.api.customeraccount.CustomerAccountService;
 import com.matiasjuarez.api.errorhandling.exceptions.EntityNotFoundException;
 import com.matiasjuarez.api.monetaryaccount.MonetaryAccountService;
+import com.matiasjuarez.model.monetaryaccount.transaction.Transaction;
 import com.matiasjuarez.model.monetaryaccount.transaction.TransactionError;
 
 import javax.inject.Inject;
@@ -34,19 +35,8 @@ public class TransactionErrorServiceImpl extends BaseService implements Transact
             throw new EntityNotFoundException(EntityNames.MONETARY_ACCOUNT, monetaryAccountId);
         }
 
-        Map<String, Object> queryParamsOrigin = new HashMap<>();
-        queryParamsOrigin.put("originid", monetaryAccountId);
-
-        Map<String, Object> queryParamsTarget = new HashMap<>();
-        queryParamsTarget.put("targetid", monetaryAccountId);
-
-        List<TransactionError> originTransactionErrors = getDao().queryForFieldValues(queryParamsOrigin);
-        List<TransactionError> targetTransactionErrors = getDao().queryForFieldValues(queryParamsTarget);
-        List<TransactionError> allTransactionErrors = new ArrayList<>();
-        allTransactionErrors.addAll(originTransactionErrors);
-        allTransactionErrors.addAll(targetTransactionErrors);
-
-        return allTransactionErrors;
+        return queryTransactionsWithParams("originMonetaryAccountId",
+                "targetMonetaryAccountId", monetaryAccountId);
     }
 
     @Override
@@ -55,19 +45,30 @@ public class TransactionErrorServiceImpl extends BaseService implements Transact
             throw new EntityNotFoundException(EntityNames.CUSTOMER_ACCOUNT, customerAccountId);
         }
 
+        return queryTransactionsWithParams("originCustomerAccountId",
+                "targetCustomerAccountId", customerAccountId);
+    }
+
+    private List<TransactionError> queryTransactionsWithParams(String originParam, String targetParam, Long accountId) throws SQLException {
         Map<String, Object> queryParamsOrigin = new HashMap<>();
-        queryParamsOrigin.put("originCustomerAccountId", customerAccountId);
+        queryParamsOrigin.put(originParam, accountId);
 
         Map<String, Object> queryParamsTarget = new HashMap<>();
-        queryParamsTarget.put("targetCustomerAccountId", customerAccountId);
+        queryParamsTarget.put(targetParam, accountId);
 
-        List<TransactionError> originTransactionErrors = getDao().queryForFieldValues(queryParamsOrigin);
-        List<TransactionError> targetTransactionErrors = getDao().queryForFieldValues(queryParamsTarget);
-        List<TransactionError> allTransactionErrors = new ArrayList<>();
-        allTransactionErrors.addAll(originTransactionErrors);
-        allTransactionErrors.addAll(targetTransactionErrors);
+        List<TransactionError> transactionsAsOrigin = getDao().queryForFieldValues(queryParamsOrigin);
+        List<TransactionError> transactionsAsTarget = getDao().queryForFieldValues(queryParamsTarget);
 
-        return allTransactionErrors;
+        List<TransactionError> allTransactions = new ArrayList<>();
+        allTransactions.addAll(transactionsAsOrigin);
+        allTransactions.addAll(transactionsAsTarget);
+
+        Map<Long, TransactionError> filteredMap = new HashMap<>();
+        for (TransactionError transaction : allTransactions) {
+            filteredMap.put(transaction.getId(), transaction);
+        }
+
+        return new ArrayList<>(filteredMap.values());
     }
 
     @Override

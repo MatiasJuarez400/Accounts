@@ -6,7 +6,6 @@ import com.matiasjuarez.model.monetaryaccount.MonetaryAccount;
 import com.matiasjuarez.utils.DateFormatter;
 
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -19,7 +18,7 @@ public class TransactionError {
     private Long id;
     
     @DatabaseField
-    private String originId;
+    private String originMonetaryAccountId;
     @DatabaseField
     private String originFunds;
     @DatabaseField
@@ -32,7 +31,7 @@ public class TransactionError {
     private String originCustomerAccountBaseCountry;
 
     @DatabaseField
-    private String targetId;
+    private String targetMonetaryAccountId;
     @DatabaseField
     private String targetFunds;
     @DatabaseField
@@ -54,14 +53,14 @@ public class TransactionError {
     private String error;
 
     public TransactionError(MonetaryAccount origin, MonetaryAccount target, BigDecimal amountToTransfer, Date executionDate, String error) {
-        this.originId = origin.getId().toString();
+        this.originMonetaryAccountId = origin.getId().toString();
         this.originFunds = origin.getFunds().toString();
         this.originCurrency = origin.getAccountCurrency().getTicker();
         this.originStatus = origin.getAccountStatus().toString();
         this.originCustomerAccountId = origin.getCustomerAccount().getId().toString();
         this.originCustomerAccountBaseCountry = origin.getCustomerAccount().getBaseCountry().getCode();
 
-        this.targetId = target.getId().toString();
+        this.targetMonetaryAccountId = target.getId().toString();
         this.targetFunds = target.getFunds().toString();
         this.targetCurrency = target.getAccountCurrency().getTicker();
         this.targetStatus = target.getAccountStatus().toString();
@@ -84,8 +83,8 @@ public class TransactionError {
         this.id = id;
     }
 
-    public String getOriginId() {
-        return originId;
+    public String getOriginMonetaryAccountId() {
+        return originMonetaryAccountId;
     }
 
     public String getOriginFunds() {
@@ -108,8 +107,8 @@ public class TransactionError {
         return originCustomerAccountBaseCountry;
     }
 
-    public String getTargetId() {
-        return targetId;
+    public String getTargetMonetaryAccountId() {
+        return targetMonetaryAccountId;
     }
 
     public String getTargetFunds() {

@@ -1,5 +1,6 @@
 package com.matiasjuarez.api.customeraccount;
 
+import com.matiasjuarez.api.ApiUtils;
 import com.matiasjuarez.api.EntityNames;
 import com.matiasjuarez.api.errorhandling.exceptions.EntityNotFoundException;
 import com.matiasjuarez.model.customer.Country;
@@ -45,14 +46,14 @@ public class CustomerAccountResource {
             throw new EntityNotFoundException(EntityNames.CUSTOMER_ACCOUNT, accountId);
         }
 
-        return Response.ok(JsonConverter.convert(customerAccount)).build();
+        return ApiUtils.buildOkResponse(customerAccount);
     }
 
     @GET
     public Response getCustomerAccounts() throws SQLException {
         List<CustomerAccount> customerAccounts = customerAccountService.getCustomerAccounts();
 
-        return Response.ok(JsonConverter.convert(customerAccounts)).build();
+        return ApiUtils.buildOkResponse(customerAccounts);
     }
 
     @PUT
@@ -63,7 +64,7 @@ public class CustomerAccountResource {
 
         CustomerAccount updatedCustomerAccount = customerAccountService.updateCustomerAccount(rawData);
 
-        return Response.ok(JsonConverter.convert(updatedCustomerAccount)).build();
+        return ApiUtils.buildOkResponse(updatedCustomerAccount);
     }
 
     @POST
@@ -72,7 +73,7 @@ public class CustomerAccountResource {
 
         CustomerAccount created = customerAccountService.createCustomerAccount(rawData);
 
-        return Response.status(Response.Status.CREATED).entity(JsonConverter.convert(created)).build();
+        return ApiUtils.buildCreatedResponse(created);
     }
 
     private CustomerAccount validateDataAndCreateRawCustomerAccount(Map<String, Object> requestBody) {

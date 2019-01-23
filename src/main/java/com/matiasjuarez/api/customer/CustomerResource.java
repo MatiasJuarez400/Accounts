@@ -1,5 +1,6 @@
 package com.matiasjuarez.api.customer;
 
+import com.matiasjuarez.api.ApiUtils;
 import com.matiasjuarez.api.errorhandling.exceptions.EntityNotFoundException;
 import com.matiasjuarez.model.customer.Customer;
 import com.matiasjuarez.utils.JsonConverter;
@@ -34,7 +35,7 @@ public class CustomerResource {
             throw new EntityNotFoundException(customerId);
         }
 
-        return Response.ok(JsonConverter.convert(customer)).build();
+        return ApiUtils.buildOkResponse(customer);
     }
 
     @POST
@@ -42,7 +43,7 @@ public class CustomerResource {
         Customer newCustomer = validateRequestBodyData(request);
         newCustomer = customerService.createCustomer(newCustomer);
 
-        return Response.status(Response.Status.CREATED).entity(JsonConverter.convert(newCustomer)).build();
+        return ApiUtils.buildCreatedResponse(newCustomer);
     }
 
     @PUT
@@ -53,7 +54,7 @@ public class CustomerResource {
 
         customerService.updateCustomer(customerToUpdate);
 
-        return Response.ok(JsonConverter.convert(customerToUpdate)).build();
+        return ApiUtils.buildOkResponse(customerToUpdate);
     }
 
     private Customer validateRequestBodyData(Map<String, Object> requestBody) {

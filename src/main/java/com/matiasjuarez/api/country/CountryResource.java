@@ -1,5 +1,6 @@
 package com.matiasjuarez.api.country;
 
+import com.matiasjuarez.api.ApiUtils;
 import com.matiasjuarez.api.EntityNames;
 import com.matiasjuarez.api.errorhandling.exceptions.EntityNotFoundException;
 import com.matiasjuarez.model.customer.Country;
@@ -34,13 +35,13 @@ public class CountryResource {
             throw new EntityNotFoundException(EntityNames.COUNTRY, countryCode);
         }
 
-        return Response.ok(JsonConverter.convert(retrievedCountry)).build();
+        return ApiUtils.buildOkResponse(retrievedCountry);
     }
 
     @GET
     public Response getCountries() throws SQLException {
         List<Country> countries = countryService.getCountries();
 
-        return Response.ok(JsonConverter.convert(countries)).build();
+        return ApiUtils.buildOkResponse(countries);
     }
 }

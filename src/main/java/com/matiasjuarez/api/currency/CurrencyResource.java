@@ -1,5 +1,6 @@
 package com.matiasjuarez.api.currency;
 
+import com.matiasjuarez.api.ApiUtils;
 import com.matiasjuarez.api.errorhandling.exceptions.EntityNotFoundException;
 import com.matiasjuarez.model.money.Currency;
 import com.matiasjuarez.utils.JsonConverter;
@@ -29,7 +30,7 @@ public class CurrencyResource {
     @GET
     public Response getCurrencies() throws SQLException {
         List<Currency> currencies = currencyService.getCurrencies();
-        return Response.ok(JsonConverter.convert(currencies)).build();
+        return ApiUtils.buildOkResponse(currencies);
     }
 
     @GET
@@ -41,6 +42,6 @@ public class CurrencyResource {
             throw new EntityNotFoundException(ticker);
         }
 
-        return Response.ok(JsonConverter.convert(currency)).build();
+        return ApiUtils.buildOkResponse(currency);
     }
 }
