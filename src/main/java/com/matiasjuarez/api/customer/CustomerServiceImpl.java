@@ -5,7 +5,7 @@ import com.matiasjuarez.api.BaseService;
 import com.matiasjuarez.api.EntityNames;
 import com.matiasjuarez.api.errorhandling.exceptions.EntityNotFoundException;
 import com.matiasjuarez.api.errorhandling.exceptions.UpdateNotPerformedException;
-import com.matiasjuarez.customer.Customer;
+import com.matiasjuarez.model.customer.Customer;
 
 import java.sql.SQLException;
 

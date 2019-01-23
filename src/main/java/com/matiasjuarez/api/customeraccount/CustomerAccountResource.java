@@ -2,9 +2,9 @@ package com.matiasjuarez.api.customeraccount;
 
 import com.matiasjuarez.api.EntityNames;
 import com.matiasjuarez.api.errorhandling.exceptions.EntityNotFoundException;
-import com.matiasjuarez.customer.Country;
-import com.matiasjuarez.customer.Customer;
-import com.matiasjuarez.customer.CustomerAccount;
+import com.matiasjuarez.model.customer.Country;
+import com.matiasjuarez.model.customer.Customer;
+import com.matiasjuarez.model.customer.CustomerAccount;
 import com.matiasjuarez.utils.JsonConverter;
 import org.apache.commons.lang3.StringUtils;
 

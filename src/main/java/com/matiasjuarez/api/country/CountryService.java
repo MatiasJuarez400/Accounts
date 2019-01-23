@@ -1,6 +1,6 @@
 package com.matiasjuarez.api.country;
 
-import com.matiasjuarez.customer.Country;
+import com.matiasjuarez.model.customer.Country;
 
 import java.sql.SQLException;
 import java.util.List;

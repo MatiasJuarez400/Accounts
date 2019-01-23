@@ -1,0 +1,17 @@
+[
+  {
+    "tickerOrigin": "USD",
+    "tickerTarget": "GBP",
+    "rate": "0.80"
+  },
+  {
+    "tickerOrigin": "USD",
+    "tickerTarget": "ARS",
+    "rate": "37"
+  },
+  {
+    "tickerOrigin": "GBP",
+    "tickerTarget": "ARS",
+    "rate": "48"
+  }
+]

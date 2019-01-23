@@ -1,4 +1,4 @@
-package com.matiasjuarez.money;
+package com.matiasjuarez.model.money;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

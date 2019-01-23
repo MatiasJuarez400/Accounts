@@ -2,8 +2,7 @@ package com.matiasjuarez.api.currency;
 
 import com.j256.ormlite.dao.Dao;
 import com.matiasjuarez.api.BaseService;
-import com.matiasjuarez.data.InMemoryDBManager;
-import com.matiasjuarez.money.Currency;
+import com.matiasjuarez.model.money.Currency;
 
 import java.sql.SQLException;
 import java.util.HashMap;

@@ -1,11 +1,10 @@
-package com.matiasjuarez.customer;
+package com.matiasjuarez.model.customer;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
-import com.matiasjuarez.monetaryaccount.MonetaryAccount;
+import com.matiasjuarez.model.monetaryaccount.MonetaryAccount;
 
 import java.util.ArrayList;
 import java.util.Collection;

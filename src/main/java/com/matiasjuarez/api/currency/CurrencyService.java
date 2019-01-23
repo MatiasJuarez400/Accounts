@@ -1,6 +1,6 @@
 package com.matiasjuarez.api.currency;
 
-import com.matiasjuarez.money.Currency;
+import com.matiasjuarez.model.money.Currency;
 
 import java.sql.SQLException;
 import java.util.List;

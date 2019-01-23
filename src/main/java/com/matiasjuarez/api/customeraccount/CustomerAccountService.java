@@ -1,6 +1,6 @@
 package com.matiasjuarez.api.customeraccount;
 
-import com.matiasjuarez.customer.CustomerAccount;
+import com.matiasjuarez.model.customer.CustomerAccount;
 
 import java.sql.SQLException;
 import java.util.List;

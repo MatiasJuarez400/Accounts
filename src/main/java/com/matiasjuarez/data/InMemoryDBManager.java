@@ -5,12 +5,12 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
-import com.matiasjuarez.customer.Country;
-import com.matiasjuarez.customer.Customer;
-import com.matiasjuarez.customer.CustomerAccount;
-import com.matiasjuarez.monetaryaccount.MonetaryAccount;
-import com.matiasjuarez.monetaryaccount.transaction.Transaction;
-import com.matiasjuarez.money.Currency;
+import com.matiasjuarez.model.customer.Country;
+import com.matiasjuarez.model.customer.Customer;
+import com.matiasjuarez.model.customer.CustomerAccount;
+import com.matiasjuarez.model.monetaryaccount.MonetaryAccount;
+import com.matiasjuarez.model.monetaryaccount.transaction.Transaction;
+import com.matiasjuarez.model.money.Currency;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

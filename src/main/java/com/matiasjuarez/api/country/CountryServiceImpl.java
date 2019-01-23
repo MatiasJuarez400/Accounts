@@ -2,7 +2,7 @@ package com.matiasjuarez.api.country;
 
 import com.j256.ormlite.dao.Dao;
 import com.matiasjuarez.api.BaseService;
-import com.matiasjuarez.customer.Country;
+import com.matiasjuarez.model.customer.Country;
 
 import java.sql.SQLException;
 import java.util.HashMap;

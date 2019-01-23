@@ -7,7 +7,7 @@ import com.matiasjuarez.api.country.CountryService;
 import com.matiasjuarez.api.customer.CustomerService;
 import com.matiasjuarez.api.errorhandling.exceptions.EntityNotFoundException;
 import com.matiasjuarez.api.errorhandling.exceptions.UpdateNotPerformedException;
-import com.matiasjuarez.customer.CustomerAccount;
+import com.matiasjuarez.model.customer.CustomerAccount;
 
 import javax.inject.Inject;
 import java.sql.SQLException;

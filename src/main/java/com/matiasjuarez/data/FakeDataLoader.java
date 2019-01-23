@@ -1,12 +1,14 @@
 package com.matiasjuarez.data;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.j256.ormlite.dao.Dao;
-import com.matiasjuarez.customer.Country;
-import com.matiasjuarez.customer.Customer;
-import com.matiasjuarez.customer.CustomerAccount;
-import com.matiasjuarez.money.Currency;
+import com.matiasjuarez.model.customer.Country;
+import com.matiasjuarez.model.customer.Customer;
+import com.matiasjuarez.model.customer.CustomerAccount;
+import com.matiasjuarez.model.monetaryaccount.MonetaryAccount;
+import com.matiasjuarez.model.money.Currency;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +29,7 @@ public class FakeDataLoader {
             loadData("data/currencies.json", new TypeReference<Currency>() {});
             loadData("data/customers.json", new TypeReference<Customer>() {});
             loadData("data/customerAccounts.json", new TypeReference<CustomerAccount>() {});
+            loadData("data/monetaryAccounts.json", new TypeReference<MonetaryAccount>() {});
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -38,6 +41,7 @@ public class FakeDataLoader {
         String jsonData = readDataFromResource(resource);
 
         ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
         Object[] readObjects = objectMapper.readValue(jsonData, Object[].class);
 

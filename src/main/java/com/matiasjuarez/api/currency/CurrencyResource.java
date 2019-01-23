@@ -1,7 +1,7 @@
 package com.matiasjuarez.api.currency;
 
 import com.matiasjuarez.api.errorhandling.exceptions.EntityNotFoundException;
-import com.matiasjuarez.money.Currency;
+import com.matiasjuarez.model.money.Currency;
 import com.matiasjuarez.utils.JsonConverter;
 
 import javax.inject.Inject;

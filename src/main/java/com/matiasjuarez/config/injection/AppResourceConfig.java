@@ -6,6 +6,9 @@ import com.matiasjuarez.api.customer.CustomerResource;
 import com.matiasjuarez.api.customeraccount.CustomerAccountResource;
 import com.matiasjuarez.api.errorhandling.*;
 import com.matiasjuarez.api.monetaryaccount.MonetaryAccountResource;
+import com.matiasjuarez.api.transaction.TransactionResource;
+import com.matiasjuarez.model.monetaryaccount.transaction.TransactionHandler;
+import com.matiasjuarez.model.money.MoneyConverter;
 import org.glassfish.jersey.server.ResourceConfig;
 
 public class AppResourceConfig extends ResourceConfig {
@@ -22,6 +25,9 @@ public class AppResourceConfig extends ResourceConfig {
         register(CountryResource.class);
         register(CustomerAccountResource.class);
         register(MonetaryAccountResource.class);
+        register(TransactionResource.class);
+        register(MoneyConverter.class);
+        register(TransactionHandler.class);
     }
 
     private void registerExceptionMappers() {
@@ -33,5 +39,6 @@ public class AppResourceConfig extends ResourceConfig {
         register(InconsistentDataExceptionMapper.class);
         register(IllegalUpdateExceptionMapper.class);
         register(ExceptionMapper.class);
+        register(InvalidTransactionExceptionMapper.class);
     }
 }

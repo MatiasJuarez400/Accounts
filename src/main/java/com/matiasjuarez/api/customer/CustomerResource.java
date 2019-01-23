@@ -1,7 +1,7 @@
 package com.matiasjuarez.api.customer;
 
 import com.matiasjuarez.api.errorhandling.exceptions.EntityNotFoundException;
-import com.matiasjuarez.customer.Customer;
+import com.matiasjuarez.model.customer.Customer;
 import com.matiasjuarez.utils.JsonConverter;
 import org.apache.commons.lang3.StringUtils;
 

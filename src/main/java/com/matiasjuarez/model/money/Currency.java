@@ -1,4 +1,4 @@
-package com.matiasjuarez.money;
+package com.matiasjuarez.model.money;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
@@ -29,5 +29,9 @@ public class Currency {
 
     public String getName() {
         return name;
+    }
+
+    public long getId() {
+        return id;
     }
 }

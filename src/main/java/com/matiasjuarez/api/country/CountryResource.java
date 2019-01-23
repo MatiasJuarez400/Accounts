@@ -2,7 +2,7 @@ package com.matiasjuarez.api.country;
 
 import com.matiasjuarez.api.EntityNames;
 import com.matiasjuarez.api.errorhandling.exceptions.EntityNotFoundException;
-import com.matiasjuarez.customer.Country;
+import com.matiasjuarez.model.customer.Country;
 import com.matiasjuarez.utils.JsonConverter;
 
 import javax.inject.Inject;

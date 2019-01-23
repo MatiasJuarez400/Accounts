@@ -13,7 +13,18 @@ public class ApiUtils {
             return (Integer) requestBodyValue;
         } catch (Exception e) {
             throw new BadRequestException(
-                    String.format("Value for %s must be a number. Received [%s]",
+                    String.format("Value for %s must be an integer. Received [%s]",
+                            requestBodyKey, requestBodyValue)
+            );
+        }
+    }
+
+    public static Double convertRequestValueToDouble(String requestBodyKey, Object requestBodyValue) {
+        try {
+            return (Double) requestBodyValue;
+        } catch (Exception e) {
+            throw new BadRequestException(
+                    String.format("Value for %s must be a floating-point number. Received [%s]",
                             requestBodyKey, requestBodyValue)
             );
         }

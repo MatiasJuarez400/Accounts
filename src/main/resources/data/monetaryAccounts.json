@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "funds": 0,
+    "accountCurrency": {
+      "id": 2,
+      "ticker": "USD",
+      "name": "United States Dollar"
+    },
+    "accountStatus": "OPERATIVE",
+    "transactions": [],
+    "customerAccount": {
+      "id": 1,
+      "customer": {
+        "id": 2,
+        "name": "Rafaela",
+        "lastname": "Simpson"
+      },
+      "baseCountry": {
+        "code": "AR",
+        "name": "Argentina"
+      }
+    },
+    "operative": true
+  },
+  {
+    "id": 2,
+    "funds": 0,
+    "accountCurrency": {
+      "id": 3,
+      "ticker": "GBP",
+      "name": "British Pound"
+    },
+    "accountStatus": "OPERATIVE",
+    "transactions": [],
+    "customerAccount": {
+      "id": 1,
+      "customer": {
+        "id": 2,
+        "name": "Rafaela",
+        "lastname": "Simpson"
+      },
+      "baseCountry": {
+        "code": "AR",
+        "name": "Argentina"
+      }
+    },
+    "operative": true
+  },
+  {
+    "id": 3,
+    "funds": 0,
+    "accountCurrency": {
+      "id": 2,
+      "ticker": "USD",
+      "name": "United States Dollar"
+    },
+    "accountStatus": "OPERATIVE",
+    "transactions": [],
+    "customerAccount": {
+      "id": 2,
+      "customer": {
+        "id": 1,
+        "name": "Matias",
+        "lastname": "Juarez"
+      },
+      "baseCountry": {
+        "code": "GB",
+        "name": "United Kingdom"
+      }
+    },
+    "operative": true
+  },
+  {
+    "id": 4,
+    "funds": 0,
+    "accountCurrency": {
+      "id": 1,
+      "ticker": "ARS",
+      "name": "Argentine Peso"
+    },
+    "accountStatus": "INACTIVE",
+    "transactions": [],
+    "customerAccount": {
+      "id": 2,
+      "customer": {
+        "id": 1,
+        "name": "Matias",
+        "lastname": "Juarez"
+      },
+      "baseCountry": {
+        "code": "GB",
+        "name": "United Kingdom"
+      }
+    },
+    "operative": false
+  }
+]

@@ -1,10 +1,10 @@
-package com.matiasjuarez.monetaryaccount.transaction;
+package com.matiasjuarez.model.monetaryaccount.transaction;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-import com.matiasjuarez.monetaryaccount.MonetaryAccount;
-import com.matiasjuarez.money.Currency;
-import com.matiasjuarez.money.Money;
+import com.matiasjuarez.model.monetaryaccount.MonetaryAccount;
+import com.matiasjuarez.model.money.Currency;
+import com.matiasjuarez.model.money.Money;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -12,7 +12,7 @@ import java.util.Date;
 @DatabaseTable(tableName = "transactions")
 public class Transaction {
     @DatabaseField(generatedId = true)
-    private long id;
+    private Long id;
     @DatabaseField(foreign = true)
     private MonetaryAccount originAccount;
     @DatabaseField(foreign = true)
@@ -31,21 +31,12 @@ public class Transaction {
     private Currency effectiveCurrency;
     @DatabaseField
     private Date executionDate;
-    @DatabaseField
-    private String errorCode;
-    @DatabaseField
-    private String errorReason;
 
-    private Transaction() {}
-
-    public Transaction(MonetaryAccount origin, MonetaryAccount target,
-                       Money initialTransactionAmount, Money feesAmount, Money effectiveTransactionAmount) {
-        this(origin, target, initialTransactionAmount, feesAmount, effectiveTransactionAmount, null, null);
-    }
+    public Transaction() {}
 
     public Transaction(MonetaryAccount origin, MonetaryAccount target,
                        Money initialTransactionAmount, Money feesAmount, Money effectiveTransactionAmount,
-                       String errorCode, String errorReason) {
+                       Date executionDate) {
         this.originAccount = origin;
         this.targetAccount = target;
 
@@ -58,10 +49,7 @@ public class Transaction {
         this.effectiveAmount = effectiveTransactionAmount.getAmount();
         this.effectiveCurrency = effectiveTransactionAmount.getCurrency();
 
-        this.errorCode = errorCode;
-        this.errorReason = errorReason;
-
-        this.executionDate = new Date();
+        this.executionDate = executionDate;
     }
 
     public long getId() {
@@ -80,27 +68,31 @@ public class Transaction {
         return targetAccount;
     }
 
-    public Money getTransferedMoney() {
-        return new Money(initialAmount, initialCurrency);
+    public BigDecimal getInitialAmount() {
+        return initialAmount;
     }
 
-    public Money getFees() {
-        return new Money(feesAmount, feesCurrency);
+    public Currency getInitialCurrency() {
+        return initialCurrency;
     }
 
-    public Money getEffectivelyTransferedMoney() {
-        return new Money(effectiveAmount, effectiveCurrency);
+    public BigDecimal getFeesAmount() {
+        return feesAmount;
+    }
+
+    public Currency getFeesCurrency() {
+        return feesCurrency;
+    }
+
+    public BigDecimal getEffectiveAmount() {
+        return effectiveAmount;
+    }
+
+    public Currency getEffectiveCurrency() {
+        return effectiveCurrency;
     }
 
     public Date getExecutionDate() {
         return executionDate;
-    }
-
-    public String getErrorCode() {
-        return errorCode;
-    }
-
-    public String getErrorReason() {
-        return errorReason;
     }
 }

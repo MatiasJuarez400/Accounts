@@ -1,13 +1,11 @@
 package com.matiasjuarez.api.monetaryaccount;
 
 import com.matiasjuarez.api.ApiUtils;
-import com.matiasjuarez.api.EntityNames;
 import com.matiasjuarez.api.customeraccount.CustomerAccountResource;
-import com.matiasjuarez.api.errorhandling.exceptions.EntityNotFoundException;
-import com.matiasjuarez.customer.CustomerAccount;
-import com.matiasjuarez.monetaryaccount.MonetaryAccount;
-import com.matiasjuarez.monetaryaccount.MonetaryAccountStatus;
-import com.matiasjuarez.money.Currency;
+import com.matiasjuarez.model.customer.CustomerAccount;
+import com.matiasjuarez.model.monetaryaccount.MonetaryAccount;
+import com.matiasjuarez.model.monetaryaccount.MonetaryAccountStatus;
+import com.matiasjuarez.model.money.Currency;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;

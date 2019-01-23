@@ -1,17 +1,15 @@
-package com.matiasjuarez.monetaryaccount;
+package com.matiasjuarez.model.monetaryaccount;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
-import com.matiasjuarez.customer.CustomerAccount;
-import com.matiasjuarez.monetaryaccount.transaction.Transaction;
-import com.matiasjuarez.money.Currency;
-import com.matiasjuarez.money.Money;
+import com.matiasjuarez.model.customer.CustomerAccount;
+import com.matiasjuarez.model.monetaryaccount.transaction.Transaction;
+import com.matiasjuarez.model.money.Currency;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Objects;
 
 @DatabaseTable(tableName = "monetary_accounts")
@@ -33,7 +31,13 @@ public class MonetaryAccount {
         this.transactions = new ArrayList<>();
     }
 
+    public MonetaryAccount(Long id) {
+        this();
+        this.id = id;
+    }
+
     public MonetaryAccount(BigDecimal funds, Currency accountCurrency, MonetaryAccountStatus accountStatus, CustomerAccount customerAccount) {
+        this();
         this.funds = funds;
         this.accountCurrency = accountCurrency;
         this.accountStatus = accountStatus;
