@@ -4,10 +4,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.IOUtils;
 
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 
 public class StoredExchangeRateService implements ExchangeRateService {
-    private static ExchangeRate[] exchangeRates = null;
+    private static List<ExchangeRate> exchangeRates = null;
 
     @Override
     public ExchangeRate getExchangeRate(String tickerOrigin, String tickerTarget) {
@@ -50,6 +53,14 @@ public class StoredExchangeRateService implements ExchangeRateService {
 
         ObjectMapper objectMapper = new ObjectMapper();
 
-        exchangeRates = objectMapper.readValue(jsonContent, ExchangeRate[].class);
+        ExchangeRateRaw[] exchangeRateRaws = objectMapper.readValue(jsonContent, ExchangeRateRaw[].class);
+
+        exchangeRates = new ArrayList<>();
+        for (ExchangeRateRaw exchangeRateRaw : exchangeRateRaws) {
+            exchangeRates.add(new ExchangeRate(
+                    exchangeRateRaw.getTickerOrigin(),
+                    exchangeRateRaw.getTickerTarget(),
+                    new BigDecimal(exchangeRateRaw.getRate())));
+        }
     }
 }

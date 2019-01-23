@@ -14,8 +14,6 @@ public class ExchangeRate {
         setRate(rate);
     }
 
-    public ExchangeRate() {}
-
     public BigDecimal getRate() {
         return rate;
     }

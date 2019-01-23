@@ -31,16 +31,18 @@ public class TransactionErrorServiceImpl extends BaseService implements Transact
         }
 
         Map<String, Object> queryParamsOrigin = new HashMap<>();
-        queryParamsOrigin.put("origin_id", monetaryAccountId);
+        queryParamsOrigin.put("originid", monetaryAccountId);
 
         Map<String, Object> queryParamsTarget = new HashMap<>();
-        queryParamsTarget.put("target_id", monetaryAccountId);
+        queryParamsTarget.put("targetid", monetaryAccountId);
 
         List<TransactionError> originTransactionErrors = getDao().queryForFieldValues(queryParamsOrigin);
         List<TransactionError> targetTransactionErrors = getDao().queryForFieldValues(queryParamsTarget);
         List<TransactionError> allTransactionErrors = new ArrayList<>();
         allTransactionErrors.addAll(originTransactionErrors);
         allTransactionErrors.addAll(targetTransactionErrors);
+
+
 
         return allTransactionErrors;
     }

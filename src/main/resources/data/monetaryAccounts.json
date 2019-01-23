@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "funds": 0,
+    "funds": 3000,
     "accountCurrency": {
       "id": 2,
       "ticker": "USD",
@@ -25,7 +25,7 @@
   },
   {
     "id": 2,
-    "funds": 0,
+    "funds": 3000,
     "accountCurrency": {
       "id": 3,
       "ticker": "GBP",
@@ -49,7 +49,7 @@
   },
   {
     "id": 3,
-    "funds": 0,
+    "funds": 3000,
     "accountCurrency": {
       "id": 2,
       "ticker": "USD",
@@ -73,7 +73,7 @@
   },
   {
     "id": 4,
-    "funds": 0,
+    "funds": 3000,
     "accountCurrency": {
       "id": 1,
       "ticker": "ARS",

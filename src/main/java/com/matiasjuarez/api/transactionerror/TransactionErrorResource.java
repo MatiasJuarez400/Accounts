@@ -9,6 +9,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -18,7 +19,7 @@ import java.util.List;
 import static com.matiasjuarez.api.transactionerror.TransactionErrorResource.TRANSACTION_ERRORS_PATH;
 
 @Path(TRANSACTION_ERRORS_PATH)
-@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public class TransactionErrorResource {
     public static final String TRANSACTION_ERRORS_PATH = MonetaryAccountResource.MONETARY_ACCOUNTS_PATH +
             "/{monetaryAccountId}/transactionerrors";

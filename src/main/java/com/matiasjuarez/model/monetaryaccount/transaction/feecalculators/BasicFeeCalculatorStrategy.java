@@ -27,8 +27,8 @@ public class BasicFeeCalculatorStrategy implements FeeCalculatorStrategy {
         for (FeeCalculatorStrategy feeCalculatorStrategy : feeCalculatorStrategies) {
             BigDecimal strategyFee = feeCalculatorStrategy.calculate(origin, target, monetaryAmountLeft);
 
-            feesToApply.add(strategyFee);
-            monetaryAmountLeft.subtract(strategyFee);
+            feesToApply = feesToApply.add(strategyFee);
+            monetaryAmountLeft = monetaryAmountLeft.subtract(strategyFee);
         }
 
         return feesToApply;
