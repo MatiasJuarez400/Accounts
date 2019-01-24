@@ -64,7 +64,7 @@ public class TransactionApiTest extends BaseApiTest{
     }
 
     @Test
-    public void executeGetTransactions_expectNotEmptyList() {
+    public void executeGetTransactionsByMonetaryAccountId_expectNotEmptyList() {
         Customer customer1 = createCustomer("name1", "lastname1");
         CustomerAccount newCustomerAccount1 = createCustomerAccount("AR", customer1.getId());
         MonetaryAccount monetaryAccount1 = createMonetaryAccount(newCustomerAccount1.getId(),
