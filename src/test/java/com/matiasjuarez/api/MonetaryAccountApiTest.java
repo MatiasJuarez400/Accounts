@@ -71,7 +71,7 @@ public class MonetaryAccountApiTest extends BaseApiTest {
         Map<String, Object> updateRequestBody = new HashMap<>();
         updateRequestBody.put("statusActive", false);
         CloseableHttpResponse updateResponse = executeRequest(HTTPMethods.PUT,
-                "/customeraccounts/" + newCustomer.getId() + "/monetaryaccounts/" + newMonetaryAccount.getId(), updateRequestBody);
+                "/customeraccounts/" + newCustomerAccount.getId() + "/monetaryaccounts/" + newMonetaryAccount.getId(), updateRequestBody);
 
         MonetaryAccount updatedMonetaryAccount = mapBodyContentToObject(
                 new TypeReference<MonetaryAccount>() {}, extractBodyResponse(updateResponse));
