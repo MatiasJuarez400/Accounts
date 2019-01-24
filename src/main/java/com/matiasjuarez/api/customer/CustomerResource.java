@@ -28,7 +28,7 @@ public class CustomerResource {
 
     @GET
     @Path("/{customerId}{format: (\\d+)?}")
-    public Response getCustomer(@PathParam("customerId") long customerId) throws SQLException {
+    public Response getCustomer(@PathParam("customerId") Long customerId) throws SQLException {
         Customer customer = customerService.getCustomer(customerId);
 
         if (customer == null) {
@@ -48,7 +48,7 @@ public class CustomerResource {
 
     @PUT
     @Path("/{customerId}{format: (\\d+)?}")
-    public Response updateCustomer(@PathParam("customerId") long customerId, Map<String, Object> requestBody) throws SQLException {
+    public Response updateCustomer(@PathParam("customerId") Long customerId, Map<String, Object> requestBody) throws SQLException {
         Customer customerToUpdate = validateRequestBodyData(requestBody);
         customerToUpdate.setId(customerId);
 

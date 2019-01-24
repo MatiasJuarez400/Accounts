@@ -48,4 +48,8 @@ public class ServerLauncher {
             server.destroy();
         }
     }
+
+    public Server getServer() {
+        return server;
+    }
 }

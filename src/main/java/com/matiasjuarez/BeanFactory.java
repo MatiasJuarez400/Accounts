@@ -1,10 +1,10 @@
 package com.matiasjuarez;
 
-import com.matiasjuarez.model.monetaryaccount.transaction.TransactionHandler;
-import com.matiasjuarez.model.monetaryaccount.transaction.feecalculators.BasicFeeCalculatorStrategy;
-import com.matiasjuarez.model.monetaryaccount.transaction.feecalculators.CurrencyConversionFeeCalcultorStrategy;
-import com.matiasjuarez.model.monetaryaccount.transaction.feecalculators.FeeCalculatorStrategy;
-import com.matiasjuarez.model.monetaryaccount.transaction.feecalculators.InternationalFeeCalculatorStrategy;
+import com.matiasjuarez.model.transaction.TransactionHandler;
+import com.matiasjuarez.model.transaction.feecalculators.BasicFeeCalculatorStrategy;
+import com.matiasjuarez.model.transaction.feecalculators.CurrencyConversionFeeCalcultorStrategy;
+import com.matiasjuarez.model.transaction.feecalculators.FeeCalculatorStrategy;
+import com.matiasjuarez.model.transaction.feecalculators.InternationalFeeCalculatorStrategy;
 import com.matiasjuarez.model.money.MoneyConverter;
 import com.matiasjuarez.model.money.exchangeRate.ExchangeRateService;
 import com.matiasjuarez.model.money.exchangeRate.StoredExchangeRateService;

@@ -56,17 +56,6 @@ public class CustomerAccountResource {
         return ApiUtils.buildOkResponse(customerAccounts);
     }
 
-    @PUT
-    @Path("/{accountId}")
-    public Response updateCustomerAccount(@PathParam("accountId") Long accountId, Map<String, Object> requestBody) throws SQLException {
-        CustomerAccount rawData = validateDataAndCreateRawCustomerAccount(requestBody);
-        rawData.setId(accountId);
-
-        CustomerAccount updatedCustomerAccount = customerAccountService.updateCustomerAccount(rawData);
-
-        return ApiUtils.buildOkResponse(updatedCustomerAccount);
-    }
-
     @POST
     public Response createCustomerAccount(Map<String, Object> requestBody) throws SQLException {
         CustomerAccount rawData = validateDataAndCreateRawCustomerAccount(requestBody);
@@ -77,27 +66,10 @@ public class CustomerAccountResource {
     }
 
     private CustomerAccount validateDataAndCreateRawCustomerAccount(Map<String, Object> requestBody) {
-        if (requestBody == null) {
-            throw getBadRequestException();
-        }
+        ApiUtils.validateIfValuesArePresent(requestBody, COUNTRY_CODE, CUSTOMER_ID);
 
         String countryCode = (String) requestBody.get(COUNTRY_CODE);
-        Object rawCustomerId = requestBody.get(CUSTOMER_ID);
-        Long customerId;
-
-        if (StringUtils.isEmpty((String) requestBody.get(COUNTRY_CODE)) || requestBody.get(CUSTOMER_ID) == null) {
-            throw getBadRequestException();
-        }
-
-        try {
-            customerId = Long.valueOf((Integer)rawCustomerId);
-        } catch (Exception e) {
-            throw new BadRequestException(
-                    String.format("Value for %s must be a number. Received [%s]",
-                            CUSTOMER_ID, rawCustomerId)
-            );
-        }
-
+        Long customerId = ApiUtils.convertRequestValueToLong(CUSTOMER_ID, requestBody);
 
         Country country = new Country();
         country.setCode(countryCode);
@@ -110,10 +82,5 @@ public class CustomerAccountResource {
         rawCustomerAccount.setBaseCountry(country);
 
         return rawCustomerAccount;
-    }
-
-    private BadRequestException getBadRequestException() {
-        return new BadRequestException(
-                String.format("Values for %s and %s must be present in request body", COUNTRY_CODE, CUSTOMER_ID));
     }
 }

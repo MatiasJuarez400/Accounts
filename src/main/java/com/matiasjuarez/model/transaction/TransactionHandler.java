@@ -1,7 +1,7 @@
-package com.matiasjuarez.model.monetaryaccount.transaction;
+package com.matiasjuarez.model.transaction;
 
 import com.matiasjuarez.model.monetaryaccount.MonetaryAccount;
-import com.matiasjuarez.model.monetaryaccount.transaction.feecalculators.FeeCalculatorStrategy;
+import com.matiasjuarez.model.transaction.feecalculators.FeeCalculatorStrategy;
 import com.matiasjuarez.model.money.Money;
 import com.matiasjuarez.model.money.MoneyConverter;
 import com.matiasjuarez.utils.DecimalRounder;

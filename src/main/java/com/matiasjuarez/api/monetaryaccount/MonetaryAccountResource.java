@@ -31,6 +31,7 @@ public class MonetaryAccountResource {
 
     private static final String ACCOUNT_CURRENCY_TICKER = "currencyTicker";
     private static final String STATUS_ACTIVE = "statusActive";
+    private static final String INITIAL_FUNDS = "initialFunds";
 
     @Inject
     private MonetaryAccountService monetaryAccountService;
@@ -44,20 +45,22 @@ public class MonetaryAccountResource {
     @POST
     public Response createMonetaryAccount(@PathParam("customerAccountId") Long customerAccountId,
                                           Map<String, Object> requestBody) throws SQLException {
-        ApiUtils.validateIfValuesArePresent(requestBody, ACCOUNT_CURRENCY_TICKER, STATUS_ACTIVE);
+        ApiUtils.validateIfValuesArePresent(requestBody, ACCOUNT_CURRENCY_TICKER, STATUS_ACTIVE, INITIAL_FUNDS);
 
         String accountCurrency = (String) requestBody.get(ACCOUNT_CURRENCY_TICKER);
         Currency currency = new Currency(accountCurrency);
 
         Boolean statusActive =
-                ApiUtils.convertRequestValueToBoolean(STATUS_ACTIVE, requestBody.get(STATUS_ACTIVE));
+                ApiUtils.convertRequestValueToBoolean(STATUS_ACTIVE, requestBody);
         MonetaryAccountStatus monetaryAccountStatus = statusActive ?
                 MonetaryAccountStatus.OPERATIVE : MonetaryAccountStatus.INACTIVE;
+
+        BigDecimal initialFunds = ApiUtils.convertRequestValueToBigDecimal(INITIAL_FUNDS, requestBody);
 
         CustomerAccount customerAccount = new CustomerAccount(customerAccountId);
 
 
-        MonetaryAccount monetaryAccountToCreate = new MonetaryAccount(new BigDecimal(0), currency, monetaryAccountStatus, customerAccount);
+        MonetaryAccount monetaryAccountToCreate = new MonetaryAccount(initialFunds, currency, monetaryAccountStatus, customerAccount);
 
         MonetaryAccount createdMonetaryAccount = monetaryAccountService.createMonetaryAccount(monetaryAccountToCreate);
 
@@ -82,7 +85,7 @@ public class MonetaryAccountResource {
         ApiUtils.validateIfValuesArePresent(requestBody, STATUS_ACTIVE);
 
         Boolean statusActive =
-                ApiUtils.convertRequestValueToBoolean(STATUS_ACTIVE, requestBody.get(STATUS_ACTIVE));
+                ApiUtils.convertRequestValueToBoolean(STATUS_ACTIVE, requestBody);
 
         MonetaryAccount monetaryAccountUpdateData = new MonetaryAccount();
         monetaryAccountUpdateData.setId(monetaryAccountId);

@@ -38,5 +38,6 @@ public class AppResourceConfig extends ResourceConfig {
         register(IllegalUpdateExceptionMapper.class);
         register(ExceptionMapper.class);
         register(InvalidTransactionExceptionMapper.class);
+        register(CustomerAccountAlreadyHaveMonetaryAccountExceptionMapper.class);
     }
 }

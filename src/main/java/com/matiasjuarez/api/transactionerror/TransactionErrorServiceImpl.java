@@ -6,8 +6,7 @@ import com.matiasjuarez.api.EntityNames;
 import com.matiasjuarez.api.customeraccount.CustomerAccountService;
 import com.matiasjuarez.api.errorhandling.exceptions.EntityNotFoundException;
 import com.matiasjuarez.api.monetaryaccount.MonetaryAccountService;
-import com.matiasjuarez.model.monetaryaccount.transaction.Transaction;
-import com.matiasjuarez.model.monetaryaccount.transaction.TransactionError;
+import com.matiasjuarez.model.transaction.TransactionError;
 
 import javax.inject.Inject;
 import java.sql.SQLException;

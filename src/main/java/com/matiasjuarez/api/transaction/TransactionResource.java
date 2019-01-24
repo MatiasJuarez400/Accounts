@@ -1,8 +1,7 @@
 package com.matiasjuarez.api.transaction;
 
 import com.matiasjuarez.api.ApiUtils;
-import com.matiasjuarez.api.monetaryaccount.MonetaryAccountResource;
-import com.matiasjuarez.model.monetaryaccount.transaction.Transaction;
+import com.matiasjuarez.model.transaction.Transaction;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -60,9 +59,9 @@ public class TransactionResource {
     public Response createTransaction(Map<String, Object> requestBody) throws Exception {
         ApiUtils.validateIfValuesArePresent(requestBody, ORIGIN_ACCOUNT, TARGET_ACCOUNT, AMOUNT_TO_TRANSFER);
 
-        Long idOrigin = Long.valueOf(ApiUtils.convertRequestValueToInteger(ORIGIN_ACCOUNT, requestBody.get(ORIGIN_ACCOUNT)));
-        Long idTarget = Long.valueOf(ApiUtils.convertRequestValueToInteger(TARGET_ACCOUNT, requestBody.get(TARGET_ACCOUNT)));
-        BigDecimal amountToTransfer = ApiUtils.convertRequestValueToBigDecimal(AMOUNT_TO_TRANSFER, requestBody.get(AMOUNT_TO_TRANSFER));
+        Long idOrigin = ApiUtils.convertRequestValueToLong(ORIGIN_ACCOUNT, requestBody);
+        Long idTarget = ApiUtils.convertRequestValueToLong(TARGET_ACCOUNT, requestBody);
+        BigDecimal amountToTransfer = ApiUtils.convertRequestValueToBigDecimal(AMOUNT_TO_TRANSFER, requestBody);
 
         TransactionDTO transactionDTO = new TransactionDTO();
         transactionDTO.setOriginMonetaryAccountId(idOrigin);

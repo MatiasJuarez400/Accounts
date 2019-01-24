@@ -37,27 +37,6 @@ public class CustomerAccountServiceImpl extends BaseService implements CustomerA
     }
 
     @Override
-    public CustomerAccount updateCustomerAccount(CustomerAccount newCustomerAcountData) throws SQLException {
-        validateForeignData(newCustomerAcountData);
-
-        CustomerAccount storedCustomerAccount = getDao().queryForId(newCustomerAcountData.getId());
-        if (storedCustomerAccount == null) {
-            throw new EntityNotFoundException(EntityNames.CUSTOMER_ACCOUNT, newCustomerAcountData.getId());
-        }
-
-        storedCustomerAccount.setBaseCountry(newCustomerAcountData.getBaseCountry());
-        storedCustomerAccount.setCustomer(newCustomerAcountData.getCustomer());
-
-        int updateResult = getDao().update(storedCustomerAccount);
-
-        if (updateResult != 1) {
-            throw new UpdateNotPerformedException(EntityNames.CUSTOMER_ACCOUNT, newCustomerAcountData.getId());
-        }
-
-        return getCustomerAccount(newCustomerAcountData.getId());
-    }
-
-    @Override
     public CustomerAccount createCustomerAccount(CustomerAccount customerAccount) throws SQLException {
         validateForeignData(customerAccount);
 
@@ -76,7 +55,7 @@ public class CustomerAccountServiceImpl extends BaseService implements CustomerA
         }
 
         if (customerService.getCustomer(newCustomerAcountData.getCustomer().getId()) == null) {
-            throw new EntityNotFoundException(EntityNames.COUNTRY, newCustomerAcountData.getCustomer().getId());
+            throw new EntityNotFoundException(EntityNames.CUSTOMER, newCustomerAcountData.getCustomer().getId());
         }
     }
 }

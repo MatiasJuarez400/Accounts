@@ -9,35 +9,46 @@ import java.math.BigDecimal;
 import java.util.Map;
 
 public class ApiUtils {
-    public static Integer convertRequestValueToInteger(String requestBodyKey, Object requestBodyValue) {
+    public static Integer convertRequestValueToInteger(String requestBodyKey, Map<String, Object> requestBody) {
         try {
-            return (Integer) requestBodyValue;
+            return Integer.valueOf(requestBody.get(requestBodyKey).toString());
         } catch (Exception e) {
             throw new BadRequestException(
                     String.format("Value for %s must be an integer. Received [%s]",
-                            requestBodyKey, requestBodyValue)
+                            requestBodyKey, requestBody.get(requestBodyKey))
             );
         }
     }
 
-    public static BigDecimal convertRequestValueToBigDecimal(String requestBodyKey, Object requestBodyValue) {
+    public static Long convertRequestValueToLong(String requestBodyKey, Map<String, Object> requestBody) {
         try {
-            return new BigDecimal((String) requestBodyValue);
+            return Long.valueOf(requestBody.get(requestBodyKey).toString());
         } catch (Exception e) {
             throw new BadRequestException(
-                    String.format("Value for %s must be a floating-point number. Received [%s]",
-                            requestBodyKey, requestBodyValue)
+                    String.format("Value for %s must be an integer. Received [%s]",
+                            requestBodyKey, requestBody.get(requestBodyKey))
             );
         }
     }
 
-    public static Boolean convertRequestValueToBoolean(String requestBodyKey, Object requestBodyValue) {
+    public static BigDecimal convertRequestValueToBigDecimal(String requestBodyKey, Map<String, Object> requestBody) {
         try {
-            return (Boolean) requestBodyValue;
+            return new BigDecimal((String) requestBody.get(requestBodyKey));
+        } catch (Exception e) {
+            throw new BadRequestException(
+                    String.format("Value for %s must be a String with floating-point number format '##.##'. Received [%s]",
+                            requestBodyKey, requestBody.get(requestBodyKey))
+            );
+        }
+    }
+
+    public static Boolean convertRequestValueToBoolean(String requestBodyKey, Map<String, Object> requestBody) {
+        try {
+            return Boolean.valueOf(requestBody.get(requestBodyKey).toString());
         } catch (Exception e) {
             throw new BadRequestException(
                     String.format("Value for %s must be a boolean. Received [%s]",
-                            requestBodyKey, requestBodyValue)
+                            requestBodyKey, requestBody.get(requestBodyKey))
             );
         }
     }

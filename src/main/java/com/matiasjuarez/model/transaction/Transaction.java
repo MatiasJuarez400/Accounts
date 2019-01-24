@@ -1,4 +1,4 @@
-package com.matiasjuarez.model.monetaryaccount.transaction;
+package com.matiasjuarez.model.transaction;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;

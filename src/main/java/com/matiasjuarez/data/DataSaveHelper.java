@@ -3,7 +3,7 @@ package com.matiasjuarez.data;
 import com.j256.ormlite.dao.Dao;
 import com.matiasjuarez.model.customer.CustomerAccount;
 import com.matiasjuarez.model.monetaryaccount.MonetaryAccount;
-import com.matiasjuarez.model.monetaryaccount.transaction.Transaction;
+import com.matiasjuarez.model.transaction.Transaction;
 
 import java.sql.SQLException;
 

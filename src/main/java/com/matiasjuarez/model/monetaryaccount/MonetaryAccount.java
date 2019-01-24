@@ -5,7 +5,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.matiasjuarez.model.customer.CustomerAccount;
-import com.matiasjuarez.model.monetaryaccount.transaction.Transaction;
+import com.matiasjuarez.model.transaction.Transaction;
 import com.matiasjuarez.model.money.Currency;
 
 import java.math.BigDecimal;
@@ -13,6 +13,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 
+/**
+ * A customer account will have a monetary account for each type of currency they can handle.
+ * For example, there will be a MonetaryAccount for USD and another one for GBP
+ */
 @DatabaseTable(tableName = "monetary_accounts")
 public class MonetaryAccount {
     @DatabaseField(generatedId = true)
@@ -50,6 +54,7 @@ public class MonetaryAccount {
         this.accountStatus = isActive ? MonetaryAccountStatus.OPERATIVE : MonetaryAccountStatus.INACTIVE;
     }
 
+    @JsonIgnore
     public boolean isOperative() {
         return this.accountStatus == MonetaryAccountStatus.OPERATIVE;
     }

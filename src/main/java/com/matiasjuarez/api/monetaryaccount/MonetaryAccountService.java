@@ -1,7 +1,7 @@
 package com.matiasjuarez.api.monetaryaccount;
 
 import com.matiasjuarez.model.monetaryaccount.MonetaryAccount;
-import com.matiasjuarez.model.monetaryaccount.transaction.Transaction;
+import com.matiasjuarez.model.transaction.Transaction;
 
 import java.sql.SQLException;
 import java.util.List;
