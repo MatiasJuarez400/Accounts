@@ -5,6 +5,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.matiasjuarez.config.server.ServerLauncher;
 import com.matiasjuarez.data.FakeDataLoader;
+import com.matiasjuarez.model.customer.Customer;
+import com.matiasjuarez.model.customer.CustomerAccount;
+import com.matiasjuarez.model.monetaryaccount.MonetaryAccount;
+import com.matiasjuarez.model.transaction.Transaction;
 import com.sun.research.ws.wadl.HTTPMethods;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -19,7 +23,10 @@ import org.apache.http.impl.client.HttpClients;
 import org.junit.BeforeClass;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
+
+import static org.junit.Assert.assertEquals;
 
 public class BaseApiTest {
     protected static ServerLauncher serverLauncher;
@@ -156,5 +163,61 @@ public class BaseApiTest {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    protected Customer createCustomer(String name, String lastname) {
+        Map<String, Object> requestBody = new HashMap<>();
+        requestBody.put("name", name);
+        requestBody.put("lastname", lastname);
+
+        CloseableHttpResponse postResponse = executeRequest(HTTPMethods.POST, "/customers", requestBody);
+
+        Customer createdCustomer = mapBodyContentToObject(
+                new TypeReference<Customer>() {}, extractBodyResponse(postResponse));
+
+        return createdCustomer;
+    }
+
+    protected CustomerAccount createCustomerAccount(String countryCode, Long customerId) {
+        Map<String, Object> requestBody = new HashMap<>();
+        requestBody.put("countryCode", countryCode);
+        requestBody.put("customerId", customerId);
+
+        CloseableHttpResponse postResponse = executeRequest(HTTPMethods.POST, "/customeraccounts", requestBody);
+
+        CustomerAccount createdCustomerAccount = mapBodyContentToObject(
+                new TypeReference<CustomerAccount>() {}, extractBodyResponse(postResponse));
+
+        return createdCustomerAccount;
+    }
+
+    protected MonetaryAccount createMonetaryAccount(Long customerAccountId, String currencyTicker,
+                                                    boolean isActive, String initialFunds) {
+
+        Map<String, Object> requestBody = new HashMap<>();
+        requestBody.put("currencyTicker", currencyTicker);
+        requestBody.put("statusActive", isActive);
+        requestBody.put("initialFunds", initialFunds);
+
+        CloseableHttpResponse postResponse = executeRequest(HTTPMethods.POST, "/customeraccounts/" + customerAccountId + "/monetaryaccounts", requestBody);
+
+        MonetaryAccount createdMonetaryAccount = mapBodyContentToObject(
+                new TypeReference<MonetaryAccount>() {}, extractBodyResponse(postResponse));
+
+        return createdMonetaryAccount;
+    }
+
+    protected Transaction createTransaction(Long originMonetaryAccount, Long targetMonetaryAccount, String amountToTransfer) {
+        Map<String, Object> requestBody = new HashMap<>();
+        requestBody.put("originMonetaryAccount", originMonetaryAccount);
+        requestBody.put("targetMonetaryAccount", targetMonetaryAccount);
+        requestBody.put("amountToTransfer", amountToTransfer);
+
+        CloseableHttpResponse postResponse = executeRequest(HTTPMethods.POST, "/transactions", requestBody);
+
+        Transaction createdCustomerAccount = mapBodyContentToObject(
+                new TypeReference<Transaction>() {}, extractBodyResponse(postResponse));
+
+        return createdCustomerAccount;
     }
 }

@@ -31,6 +31,7 @@ public class MonetaryAccountApiTest extends BaseApiTest {
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("currencyTicker", "USD");
         requestBody.put("statusActive", true);
+        requestBody.put("initialFunds", "4000.50");
 
         CloseableHttpResponse postResponse = executeRequest(HTTPMethods.POST, "/customeraccounts/1/monetaryaccounts", requestBody);
 

@@ -13,6 +13,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 
+/**
+ * A customer account will have a monetary account for each type of currency they can handle.
+ * For example, there will be a MonetaryAccount for USD and another one for GBP
+ */
 @DatabaseTable(tableName = "monetary_accounts")
 public class MonetaryAccount {
     @DatabaseField(generatedId = true)

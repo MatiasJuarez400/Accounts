@@ -65,6 +65,12 @@ public class ErrorModel {
         this.errorMessage = invalidTransactionException.getMessage();
     }
 
+    public ErrorModel(CustomerAccountAlreadyHaveMonetaryAccountException customerAccountAlreadyHaveMonetaryAccountException) {
+        this.errorCode = 10;
+        this.errorDescription = "Customer account already has monetary account with that currency";
+        this.errorMessage = customerAccountAlreadyHaveMonetaryAccountException.getMessage();
+    }
+
     public String toJson() {
         return JsonConverter.convert(this);
     }

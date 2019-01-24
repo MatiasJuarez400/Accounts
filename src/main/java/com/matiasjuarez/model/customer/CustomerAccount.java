@@ -9,6 +9,9 @@ import com.matiasjuarez.model.monetaryaccount.MonetaryAccount;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * This class represents the existence of a person as a customer of the bank or financial entity
+ */
 @DatabaseTable(tableName = "customer_accounts")
 public class CustomerAccount {
     @DatabaseField(generatedId = true)

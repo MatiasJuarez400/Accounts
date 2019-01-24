@@ -5,6 +5,7 @@ import com.matiasjuarez.api.BaseService;
 import com.matiasjuarez.api.EntityNames;
 import com.matiasjuarez.api.currency.CurrencyService;
 import com.matiasjuarez.api.customeraccount.CustomerAccountService;
+import com.matiasjuarez.api.errorhandling.exceptions.CustomerAccountAlreadyHaveMonetaryAccountException;
 import com.matiasjuarez.api.errorhandling.exceptions.EntityNotFoundException;
 import com.matiasjuarez.api.errorhandling.exceptions.IllegalUpdateException;
 import com.matiasjuarez.api.errorhandling.exceptions.UpdateNotPerformedException;
@@ -34,6 +35,14 @@ public class MonetaryAccountServiceImpl extends BaseService implements MonetaryA
         this.currencyService = currencyService;
     }
 
+    /**
+     * Creates a new monetary account for a customer account if the monetary account to create
+     * has a valid currency, a customer account exists with the specified id and the customer account
+     * does not have a monetary account with the same currency as the new one.
+     * @param monetaryAccountToCreate
+     * @return
+     * @throws SQLException
+     */
     @Override
     public MonetaryAccount createMonetaryAccount(MonetaryAccount monetaryAccountToCreate) throws SQLException {
         String accountTicker = monetaryAccountToCreate.getAccountCurrency().getTicker();
@@ -47,6 +56,12 @@ public class MonetaryAccountServiceImpl extends BaseService implements MonetaryA
         CustomerAccount storedCustomerAccount = customerAccountService.getCustomerAccount(customerAccountId);
         if (storedCustomerAccount == null) {
             throw new EntityNotFoundException(EntityNames.CUSTOMER_ACCOUNT, customerAccountId);
+        }
+
+        for (MonetaryAccount monetaryAccount : storedCustomerAccount.getMonetaryAccounts()) {
+            if (monetaryAccount.getAccountCurrency().getTicker().equalsIgnoreCase(accountTicker)) {
+                throw new CustomerAccountAlreadyHaveMonetaryAccountException(customerAccountId, accountTicker);
+            }
         }
 
         monetaryAccountToCreate.setAccountCurrency(storedCurrency);

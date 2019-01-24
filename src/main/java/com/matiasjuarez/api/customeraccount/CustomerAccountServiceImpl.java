@@ -55,7 +55,7 @@ public class CustomerAccountServiceImpl extends BaseService implements CustomerA
         }
 
         if (customerService.getCustomer(newCustomerAcountData.getCustomer().getId()) == null) {
-            throw new EntityNotFoundException(EntityNames.COUNTRY, newCustomerAcountData.getCustomer().getId());
+            throw new EntityNotFoundException(EntityNames.CUSTOMER, newCustomerAcountData.getCustomer().getId());
         }
     }
 }
