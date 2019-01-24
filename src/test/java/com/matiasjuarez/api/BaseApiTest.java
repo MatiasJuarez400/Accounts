@@ -3,6 +3,7 @@ package com.matiasjuarez.api;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.matiasjuarez.config.server.ServerConfig;
 import com.matiasjuarez.config.server.ServerLauncher;
 import com.matiasjuarez.data.FakeDataLoader;
 import com.matiasjuarez.model.customer.Customer;
@@ -26,11 +27,10 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-
 public class BaseApiTest {
     protected static ServerLauncher serverLauncher;
-    protected static String BASE_URL = "http://localhost:8090/demoapp";
+    protected static String BASE_URL = "http://localhost:" + ServerConfig.getInstance().getServerPort() +
+            "/" + ServerConfig.getInstance().getServerBasePath();
 
     @BeforeClass
     public static void setup() {
@@ -48,7 +48,7 @@ public class BaseApiTest {
         }
 
         int waitingTime = 500;
-        int maxWaitingTime = 8000;
+        int maxWaitingTime = 15000;
         int waitTime = 0;
         while ((serverLauncher == null || serverLauncher.getServer() == null ||
                 serverLauncher.getServer().getState().equalsIgnoreCase("STARTING")) &&
