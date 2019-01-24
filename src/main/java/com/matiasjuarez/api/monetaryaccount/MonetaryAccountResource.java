@@ -50,7 +50,7 @@ public class MonetaryAccountResource {
         Currency currency = new Currency(accountCurrency);
 
         Boolean statusActive =
-                ApiUtils.convertRequestValueToBoolean(STATUS_ACTIVE, requestBody.get(STATUS_ACTIVE));
+                ApiUtils.convertRequestValueToBoolean(STATUS_ACTIVE, requestBody);
         MonetaryAccountStatus monetaryAccountStatus = statusActive ?
                 MonetaryAccountStatus.OPERATIVE : MonetaryAccountStatus.INACTIVE;
 
@@ -82,7 +82,7 @@ public class MonetaryAccountResource {
         ApiUtils.validateIfValuesArePresent(requestBody, STATUS_ACTIVE);
 
         Boolean statusActive =
-                ApiUtils.convertRequestValueToBoolean(STATUS_ACTIVE, requestBody.get(STATUS_ACTIVE));
+                ApiUtils.convertRequestValueToBoolean(STATUS_ACTIVE, requestBody);
 
         MonetaryAccount monetaryAccountUpdateData = new MonetaryAccount();
         monetaryAccountUpdateData.setId(monetaryAccountId);

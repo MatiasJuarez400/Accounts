@@ -50,6 +50,7 @@ public class MonetaryAccount {
         this.accountStatus = isActive ? MonetaryAccountStatus.OPERATIVE : MonetaryAccountStatus.INACTIVE;
     }
 
+    @JsonIgnore
     public boolean isOperative() {
         return this.accountStatus == MonetaryAccountStatus.OPERATIVE;
     }

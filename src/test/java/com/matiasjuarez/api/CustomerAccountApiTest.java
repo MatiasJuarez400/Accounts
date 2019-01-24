@@ -1,17 +1,16 @@
 package com.matiasjuarez.api;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.matiasjuarez.model.customer.Customer;
 import com.matiasjuarez.model.customer.CustomerAccount;
 import com.sun.research.ws.wadl.HTTPMethods;
-import static org.junit.Assert.*;
-
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static org.junit.Assert.*;
 
 public class CustomerAccountApiTest extends BaseApiTest {
 
