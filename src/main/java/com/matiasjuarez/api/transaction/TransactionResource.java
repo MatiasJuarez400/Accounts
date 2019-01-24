@@ -1,8 +1,7 @@
 package com.matiasjuarez.api.transaction;
 
 import com.matiasjuarez.api.ApiUtils;
-import com.matiasjuarez.api.monetaryaccount.MonetaryAccountResource;
-import com.matiasjuarez.model.monetaryaccount.transaction.Transaction;
+import com.matiasjuarez.model.transaction.Transaction;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;

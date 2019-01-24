@@ -28,7 +28,7 @@ public class CustomerResource {
 
     @GET
     @Path("/{customerId}{format: (\\d+)?}")
-    public Response getCustomer(@PathParam("customerId") long customerId) throws SQLException {
+    public Response getCustomer(@PathParam("customerId") Long customerId) throws SQLException {
         Customer customer = customerService.getCustomer(customerId);
 
         if (customer == null) {

@@ -3,15 +3,14 @@ package com.matiasjuarez.data;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
-import com.j256.ormlite.misc.TransactionManager;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import com.matiasjuarez.model.customer.Country;
 import com.matiasjuarez.model.customer.Customer;
 import com.matiasjuarez.model.customer.CustomerAccount;
 import com.matiasjuarez.model.monetaryaccount.MonetaryAccount;
-import com.matiasjuarez.model.monetaryaccount.transaction.Transaction;
-import com.matiasjuarez.model.monetaryaccount.transaction.TransactionError;
+import com.matiasjuarez.model.transaction.Transaction;
+import com.matiasjuarez.model.transaction.TransactionError;
 import com.matiasjuarez.model.money.Currency;
 
 import java.sql.SQLException;

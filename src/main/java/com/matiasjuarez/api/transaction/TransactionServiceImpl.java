@@ -10,10 +10,9 @@ import com.matiasjuarez.api.errorhandling.exceptions.InvalidTransactionException
 import com.matiasjuarez.api.monetaryaccount.MonetaryAccountService;
 import com.matiasjuarez.api.transactionerror.TransactionErrorService;
 import com.matiasjuarez.model.monetaryaccount.MonetaryAccount;
-import com.matiasjuarez.model.monetaryaccount.transaction.Transaction;
-import com.matiasjuarez.model.monetaryaccount.transaction.TransactionError;
-import com.matiasjuarez.model.monetaryaccount.transaction.TransactionHandler;
-import com.matiasjuarez.utils.JsonConverter;
+import com.matiasjuarez.model.transaction.Transaction;
+import com.matiasjuarez.model.transaction.TransactionError;
+import com.matiasjuarez.model.transaction.TransactionHandler;
 
 import javax.inject.Inject;
 import java.sql.SQLException;

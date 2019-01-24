@@ -1,6 +1,6 @@
 package com.matiasjuarez.api.transactionerror;
 
-import com.matiasjuarez.model.monetaryaccount.transaction.TransactionError;
+import com.matiasjuarez.model.transaction.TransactionError;
 
 import java.sql.SQLException;
 import java.util.List;

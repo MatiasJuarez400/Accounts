@@ -5,7 +5,7 @@ import com.matiasjuarez.model.customer.Country;
 import com.matiasjuarez.model.customer.Customer;
 import com.matiasjuarez.model.customer.CustomerAccount;
 import com.matiasjuarez.model.monetaryaccount.MonetaryAccount;
-import com.matiasjuarez.model.monetaryaccount.transaction.Transaction;
+import com.matiasjuarez.model.transaction.Transaction;
 import com.matiasjuarez.model.money.Currency;
 import com.matiasjuarez.model.money.Money;
 import org.h2.tools.Server;

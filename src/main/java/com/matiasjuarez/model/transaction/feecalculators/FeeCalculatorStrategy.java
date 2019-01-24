@@ -1,4 +1,4 @@
-package com.matiasjuarez.model.monetaryaccount.transaction.feecalculators;
+package com.matiasjuarez.model.transaction.feecalculators;
 
 import com.matiasjuarez.model.monetaryaccount.MonetaryAccount;
 
