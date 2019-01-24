@@ -1,6 +1,7 @@
 package com.matiasjuarez.api;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.matiasjuarez.model.customer.Customer;
 import com.matiasjuarez.model.customer.CustomerAccount;
 import com.sun.research.ws.wadl.HTTPMethods;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -16,26 +17,33 @@ public class CustomerAccountApiTest extends BaseApiTest {
 
     @Test
     public void executeGetCustomerAccount_expectCustomerAccountNotNull() {
-        String responseBody = executeRequestAndExtractBodyResponse(HTTPMethods.GET, "/customeraccounts/1");
+        Customer newCustomer = createCustomer("aName", "aLastName");
+        CustomerAccount newCustomerAccount = createCustomerAccount("AR", newCustomer.getId());
 
-        CustomerAccount customerAccount = mapBodyContentToObject(new TypeReference<CustomerAccount>() {}, responseBody);
+        String responseBody = executeRequestAndExtractBodyResponse(
+                HTTPMethods.GET, "/customeraccounts/" + newCustomerAccount.getId());
 
-        assertNotNull(customerAccount);
-        assertNotNull(customerAccount.getBaseCountry());
-        assertNotNull(customerAccount.getCustomer());
-        assertNotNull(customerAccount.getMonetaryAccounts());
-        assertTrue(1L == customerAccount.getId());
+        CustomerAccount retrieved = mapBodyContentToObject(new TypeReference<CustomerAccount>() {}, responseBody);
+
+        assertNotNull(retrieved);
+        assertNotNull(retrieved.getBaseCountry());
+        assertNotNull(retrieved.getCustomer());
+        assertNotNull(retrieved.getMonetaryAccounts());
+        assertTrue(newCustomerAccount.getId() == retrieved.getId());
     }
 
     @Test
     public void executeGetCustomerAccount_expect404() {
-        CloseableHttpResponse responseBody = executeRequest(HTTPMethods.GET, "/customeraccounts/1000");
+        CloseableHttpResponse responseBody = executeRequest(HTTPMethods.GET, "/customeraccounts/100000");
 
         assertEquals(404, responseBody.getStatusLine().getStatusCode());
     }
 
     @Test
     public void executeGetCustomerAccounts_expectCustomerAccountListNotEmpty() {
+        Customer newCustomer = createCustomer("aName", "aLastName");
+        CustomerAccount newCustomerAccount = createCustomerAccount("AR", newCustomer.getId());
+
         String responseBody = executeRequestAndExtractBodyResponse(HTTPMethods.GET, "/customeraccounts");
 
         List<CustomerAccount> customerAccountList = mapBodyContentToObject(new TypeReference<List<CustomerAccount>>() {}, responseBody);

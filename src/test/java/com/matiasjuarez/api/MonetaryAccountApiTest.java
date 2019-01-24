@@ -1,6 +1,7 @@
 package com.matiasjuarez.api;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.matiasjuarez.model.customer.Customer;
 import com.matiasjuarez.model.customer.CustomerAccount;
 import com.matiasjuarez.model.monetaryaccount.MonetaryAccount;
 import com.matiasjuarez.model.monetaryaccount.MonetaryAccountStatus;
@@ -18,7 +19,12 @@ import static org.junit.Assert.assertEquals;
 public class MonetaryAccountApiTest extends BaseApiTest {
     @Test
     public void executeGetMonetaryAccounts_expectMonetaryAccountListNotEmpty() {
-        String responseBody = executeRequestAndExtractBodyResponse(HTTPMethods.GET, "/customeraccounts/1/monetaryaccounts");
+        Customer newCustomer = createCustomer("aName", "aLastName");
+        CustomerAccount newCustomerAccount = createCustomerAccount("AR", newCustomer.getId());
+        MonetaryAccount newMonetaryAccount = createMonetaryAccount(newCustomerAccount.getId(), "USD", true, "1000");
+
+        String responseBody = executeRequestAndExtractBodyResponse(HTTPMethods.GET,
+                "/customeraccounts/" + newCustomerAccount.getId() + "/monetaryaccounts");
 
         List<MonetaryAccount> monetaryAccountList = mapBodyContentToObject(new TypeReference<List<MonetaryAccount>>() {}, responseBody);
 
@@ -56,21 +62,16 @@ public class MonetaryAccountApiTest extends BaseApiTest {
 
     @Test
     public void executeUpdateMonetaryAccount_expectMonetaryAccountUpdateSuccessful() {
-        Map<String, Object> createRequestBody = new HashMap<>();
-        createRequestBody.put("currencyTicker", "USD");
-        createRequestBody.put("statusActive", true);
+        Customer newCustomer = createCustomer("aName", "aLastName");
+        CustomerAccount newCustomerAccount = createCustomerAccount("AR", newCustomer.getId());
+        MonetaryAccount newMonetaryAccount = createMonetaryAccount(newCustomerAccount.getId(), "USD", true, "1000");
 
-        CloseableHttpResponse postResponse = executeRequest(HTTPMethods.POST, "/customeraccounts/1/monetaryaccounts", createRequestBody);
-
-        MonetaryAccount createdMonetaryAccount = mapBodyContentToObject(
-                new TypeReference<MonetaryAccount>() {}, extractBodyResponse(postResponse));
-
-        MonetaryAccountStatus beforeMonetaryAccountStatus = createdMonetaryAccount.getAccountStatus();
+        MonetaryAccountStatus beforeMonetaryAccountStatus = newMonetaryAccount.getAccountStatus();
 
         Map<String, Object> updateRequestBody = new HashMap<>();
         updateRequestBody.put("statusActive", false);
         CloseableHttpResponse updateResponse = executeRequest(HTTPMethods.PUT,
-                "/customeraccounts/1/monetaryaccounts/" + createdMonetaryAccount.getId(), updateRequestBody);
+                "/customeraccounts/" + newCustomer.getId() + "/monetaryaccounts/" + newMonetaryAccount.getId(), updateRequestBody);
 
         MonetaryAccount updatedMonetaryAccount = mapBodyContentToObject(
                 new TypeReference<MonetaryAccount>() {}, extractBodyResponse(updateResponse));
