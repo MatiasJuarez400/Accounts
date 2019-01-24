@@ -20,5 +20,5 @@ You can find examples of the API usage in the following link: <br />
 https://web.postman.co/collections/2324767-8b6f4675-3015-408b-961a-e878efc37431?workspace=336fe640-151c-494e-84ab-b1f297a2cf68
 
 
-Run the project by running the jar file you will find under target: <br />
+Run the project by running the jar file you will find under target with the following command: <br /> <br />
 java -jar accounts-1.0.jar
