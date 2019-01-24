@@ -106,13 +106,7 @@ public class BaseApiTest {
 
         CloseableHttpResponse response = executeRequest(httpMethod, resourcePath, requestBody);
 
-        try {
-            String bodyContent = IOUtils.toString(response.getEntity().getContent(), "UTF-8");
-            response.close();
-            return bodyContent;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        return extractBodyResponse(response);
     }
 
     protected String executeRequestAndExtractBodyResponse(
@@ -123,6 +117,16 @@ public class BaseApiTest {
 
     protected String executeRequestAndExtractBodyResponse(HTTPMethods httpMethod, String resourcePath) {
         return executeRequestAndExtractBodyResponse(httpMethod, resourcePath, "");
+    }
+
+    protected String extractBodyResponse(CloseableHttpResponse response) {
+        try {
+            String bodyContent = IOUtils.toString(response.getEntity().getContent(), "UTF-8");
+            response.close();
+            return bodyContent;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     protected String convertMapToJson(Map<String, Object> aMap) {

@@ -48,7 +48,7 @@ public class CustomerResource {
 
     @PUT
     @Path("/{customerId}{format: (\\d+)?}")
-    public Response updateCustomer(@PathParam("customerId") long customerId, Map<String, Object> requestBody) throws SQLException {
+    public Response updateCustomer(@PathParam("customerId") Long customerId, Map<String, Object> requestBody) throws SQLException {
         Customer customerToUpdate = validateRequestBodyData(requestBody);
         customerToUpdate.setId(customerId);
 

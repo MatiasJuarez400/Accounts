@@ -56,17 +56,6 @@ public class CustomerAccountResource {
         return ApiUtils.buildOkResponse(customerAccounts);
     }
 
-    @PUT
-    @Path("/{accountId}")
-    public Response updateCustomerAccount(@PathParam("accountId") Long accountId, Map<String, Object> requestBody) throws SQLException {
-        CustomerAccount rawData = validateDataAndCreateRawCustomerAccount(requestBody);
-        rawData.setId(accountId);
-
-        CustomerAccount updatedCustomerAccount = customerAccountService.updateCustomerAccount(rawData);
-
-        return ApiUtils.buildOkResponse(updatedCustomerAccount);
-    }
-
     @POST
     public Response createCustomerAccount(Map<String, Object> requestBody) throws SQLException {
         CustomerAccount rawData = validateDataAndCreateRawCustomerAccount(requestBody);

@@ -8,6 +8,5 @@ import java.util.List;
 public interface CustomerAccountService {
     CustomerAccount getCustomerAccount(Long id) throws SQLException;
     List<CustomerAccount> getCustomerAccounts() throws SQLException;
-    CustomerAccount updateCustomerAccount(CustomerAccount customerAccount) throws SQLException;
     CustomerAccount createCustomerAccount(CustomerAccount customerAccount) throws SQLException;
 }
