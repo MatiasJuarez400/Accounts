@@ -140,19 +140,22 @@ public class MonetaryAccountServiceImpl extends BaseService implements MonetaryA
 
     @Override
     public void processTransaction(Transaction transaction) throws Exception {
-        MonetaryAccount origin = getDao().queryForId(Long.valueOf(transaction.getOriginMonetaryAccountId()));
-        MonetaryAccount target = getDao().queryForId(Long.valueOf(transaction.getTargetMonetaryAccountId()));
+        doProcess(transaction, getDao());
+    }
+
+    private static synchronized void doProcess(Transaction transaction, Dao<MonetaryAccount, Long> dao) throws Exception {
+        MonetaryAccount origin = dao.queryForId(Long.valueOf(transaction.getOriginMonetaryAccountId()));
+        MonetaryAccount target = dao.queryForId(Long.valueOf(transaction.getTargetMonetaryAccountId()));
 
         origin.setFunds(origin.getFunds().subtract(new BigDecimal(transaction.getTransferAmount())));
         target.setFunds(target.getFunds().add(new BigDecimal(transaction.getEffectiveAmount())));
 
         // Execute updates inside a single transaction
-        Dao<MonetaryAccount, Long> monetaryAccountDao = getDao();
-        monetaryAccountDao.callBatchTasks(new Callable<Object>() {
+        dao.callBatchTasks(new Callable<Object>() {
             @Override
             public Object call() throws Exception {
-                monetaryAccountDao.update(origin);
-                monetaryAccountDao.update(target);
+                dao.update(origin);
+                dao.update(target);
 
                 return true;
             }

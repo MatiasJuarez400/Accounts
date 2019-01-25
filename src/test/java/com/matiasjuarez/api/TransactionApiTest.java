@@ -10,9 +10,8 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.junit.Test;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.*;
 
 import static org.junit.Assert.*;
 
@@ -85,6 +84,52 @@ public class TransactionApiTest extends BaseApiTest{
 
         assertNotNull(transactionList);
         assertEquals(3, transactionList.size());
+    }
+
+    @Test
+    public void executeTransactionsInParallel_expectConsistentResult() throws InterruptedException, ExecutionException {
+        Customer customer1 = createCustomer("name1", "lastname1");
+        CustomerAccount newCustomerAccount1 = createCustomerAccount("AR", customer1.getId());
+        MonetaryAccount monetaryAccount1 = createMonetaryAccount(newCustomerAccount1.getId(),
+                "USD", true, "10000");
+
+        Customer customer2 = createCustomer("name2", "lastname2");
+        CustomerAccount newCustomerAccount2 = createCustomerAccount("AR", customer2.getId());
+        MonetaryAccount monetaryAccount2 = createMonetaryAccount(newCustomerAccount2.getId(),
+                "USD", true, "0");
+
+        Collection<Callable<CloseableHttpResponse>> concurrentTasks = new ArrayList<>();
+        for (int i = 0; i < 50; i++) {
+            concurrentTasks.add(getTransactionExecutionTask(monetaryAccount1, monetaryAccount2));
+        }
+
+        ExecutorService executorService = Executors.newFixedThreadPool(4);
+        List<Future<CloseableHttpResponse>> futures = executorService.invokeAll(concurrentTasks);
+
+        for (Future future : futures) {
+            future.get();
+        }
+
+        List<MonetaryAccount> monetaryAccountList1 = getMonetaryAccountsFromCustomerAccount(newCustomerAccount1.getId());
+        List<MonetaryAccount> monetaryAccountList2 = getMonetaryAccountsFromCustomerAccount(newCustomerAccount2.getId());
+
+        assertTrue(new BigDecimal("9500.00").compareTo(monetaryAccountList1.get(0).getFunds()) == 0);
+        assertTrue(new BigDecimal("500.00").compareTo(monetaryAccountList2.get(0).getFunds()) == 0);
+    }
+
+    private Callable<CloseableHttpResponse> getTransactionExecutionTask(MonetaryAccount origin, MonetaryAccount target) {
+        return new Callable<CloseableHttpResponse>() {
+            @Override
+            public CloseableHttpResponse call() throws Exception {
+                Map<String, Object> requestBody = new HashMap<>();
+                requestBody.put("originMonetaryAccount", origin.getId());
+                requestBody.put("targetMonetaryAccount", target.getId());
+                requestBody.put("amountToTransfer", "10");
+
+                CloseableHttpResponse postResponse = executeRequest(HTTPMethods.POST, "/transactions", requestBody);
+                return postResponse;
+            }
+        };
     }
 
     private List<MonetaryAccount> getMonetaryAccountsFromCustomerAccount(Long customerAccountId) {
