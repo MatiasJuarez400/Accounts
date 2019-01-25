@@ -42,6 +42,15 @@ public class TransactionServiceImpl extends BaseService implements TransactionSe
 
     @Override
     public Transaction createTransaction(TransactionDTO transactionDTO) throws Exception {
+        return doCreateTransaction(transactionDTO, monetaryAccountService, transactionHandler,
+                transactionErrorService, getDao());
+    }
+
+    private static synchronized Transaction doCreateTransaction(TransactionDTO transactionDTO,
+                                                                MonetaryAccountService monetaryAccountService,
+                                                                TransactionHandler transactionHandler,
+                                                                TransactionErrorService transactionErrorService,
+                                                                Dao<Transaction, Long> dao) throws Exception {
         MonetaryAccount origin = monetaryAccountService.getMonetaryAccount(transactionDTO.getOriginMonetaryAccountId());
         MonetaryAccount target = monetaryAccountService.getMonetaryAccount(transactionDTO.getTargetMonetaryAccountId());
 
@@ -58,7 +67,7 @@ public class TransactionServiceImpl extends BaseService implements TransactionSe
 
         monetaryAccountService.processTransaction(transactionToSave);
 
-        return getDao().createIfNotExists(transactionToSave);
+        return dao.createIfNotExists(transactionToSave);
     }
 
     @Override

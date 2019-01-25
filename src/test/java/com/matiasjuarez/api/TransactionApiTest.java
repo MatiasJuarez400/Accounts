@@ -91,7 +91,7 @@ public class TransactionApiTest extends BaseApiTest{
         Customer customer1 = createCustomer("name1", "lastname1");
         CustomerAccount newCustomerAccount1 = createCustomerAccount("AR", customer1.getId());
         MonetaryAccount monetaryAccount1 = createMonetaryAccount(newCustomerAccount1.getId(),
-                "USD", true, "10000");
+                "USD", true, "450");
 
         Customer customer2 = createCustomer("name2", "lastname2");
         CustomerAccount newCustomerAccount2 = createCustomerAccount("AR", customer2.getId());
@@ -113,8 +113,8 @@ public class TransactionApiTest extends BaseApiTest{
         List<MonetaryAccount> monetaryAccountList1 = getMonetaryAccountsFromCustomerAccount(newCustomerAccount1.getId());
         List<MonetaryAccount> monetaryAccountList2 = getMonetaryAccountsFromCustomerAccount(newCustomerAccount2.getId());
 
-        assertTrue(new BigDecimal("9500.00").compareTo(monetaryAccountList1.get(0).getFunds()) == 0);
-        assertTrue(new BigDecimal("500.00").compareTo(monetaryAccountList2.get(0).getFunds()) == 0);
+        assertTrue(new BigDecimal("0.00").compareTo(monetaryAccountList1.get(0).getFunds()) == 0);
+        assertTrue(new BigDecimal("450.00").compareTo(monetaryAccountList2.get(0).getFunds()) == 0);
     }
 
     private Callable<CloseableHttpResponse> getTransactionExecutionTask(MonetaryAccount origin, MonetaryAccount target) {
